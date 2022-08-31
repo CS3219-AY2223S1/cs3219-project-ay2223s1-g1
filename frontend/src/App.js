@@ -1,7 +1,7 @@
 import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
 import SignupPage from './components/SignupPage';
 import {Box} from "@mui/material";
-
+// adding some comments
 function App() {
     return (
         <div className="App">
