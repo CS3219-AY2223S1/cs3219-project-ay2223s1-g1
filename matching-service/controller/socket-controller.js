@@ -8,7 +8,7 @@ export async function matchUser(id, difficulty) {
             new_user = createUser(id, difficulty);
 
             const intervalId = setInterval(() => {
-                find_user = User.findOne({ where: { id: id } })
+                find_user = await User.findOne({ where: { id: id } })
                 if (find_user != null) {
                   console.log('match found with new user');
                   clearInterval(intervalId);
