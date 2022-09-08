@@ -12,7 +12,7 @@ function App() {
                     <Routes>
                         <Route exact path="/" element={<Navigate replace to="/signup" />}></Route>
                         <Route path="/signup" element={<SignupPage/>}/>
-                        <Route path="/login" element={<SelectDifficultyPage/>}/>
+                        <Route path="/dashboard" element={<SelectDifficultyPage/>}/>
                         <Route path="/difficulty" element={<PendingMatchingPage/>}/>
                     </Routes>
                 </Router>
