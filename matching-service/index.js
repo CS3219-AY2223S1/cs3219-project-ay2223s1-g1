@@ -29,3 +29,4 @@ app.get('/', (req, res) => {
 const httpServer = createServer(app)
 
 httpServer.listen(8001);
+console.log('matching-service listening on port 8001');
