@@ -1,5 +1,4 @@
 import User from './user.js';
-import Container from './container.js';
 
 export async function createUser(id, difficulty) {
     const new_user = User.create({

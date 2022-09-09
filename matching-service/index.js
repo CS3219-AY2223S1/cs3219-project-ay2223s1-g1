@@ -16,16 +16,22 @@ app.get('/', (req, res) => {
 
 const httpServer = createServer(app)
 
-const io = new Server(httpServer, { /* options */ });
+/*const io = new Server(httpServer, { 
+    cors: {
+        origin: "http://localhost:3000"
+    }
+ });*/
 
-console.log('connection occurs');
+ const io = new Server(httpServer);
+
 httpServer.listen(8001);
 
 io.on("connection", (socket) => {
     console.log(socket.id);
-    socket.on('match', (data) => {
+    console.log('socket connected on server side');
+    /*socket.on('match', (data) => {
         //function to match two users
         id_value = matchUser(socket.id, data);
         socket.to(socket.id).emit('matched room', id_value);
-    })
+    });*/
 });
