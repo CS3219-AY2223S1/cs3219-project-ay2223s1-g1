@@ -29,19 +29,13 @@ export async function createUser(req, res) {
 export async function signIn(req, res) {
     try {
         const { username, password } = req.body;
-        const user = await __FindOneuser(username,password)
-        if (username && password) {
-            console.log("I am trying to log in")
-            if (resp.err) {
-                return res.status(400).json({message: 'Could not create a new user!'});
-            } else {
-                console.log(`Created new user ${username} successfully!`)
-                return res.status(201).json({message: `Created new user ${username} successfully!`});
-            }
+        const user = await _FindOneuser(username,password)
+        if (user) {
+            return res.status(201).json({message: `Log in is successful!`});
         } else {
-            return res.status(400).json({message: 'Username and/or Password are missing!'});
+            return res.status(400).json({message: 'Incorrect username/password!'});
         }
     } catch (err) {
-        return res.status(500).json({message: 'Database failure when creating new user!'})
+        return res.status(500).json({message: 'Database failure when trying to log in!'})
     }
 }

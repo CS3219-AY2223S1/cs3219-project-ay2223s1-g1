@@ -1,4 +1,5 @@
 import { createUser, findUserbyUsername, findOneUser } from './repository.js';
+import bcrypt from 'bcrypt'
 
 //need to separate orm functions from repository to decouple business logic from persistence
 export async function ormCreateUser(username, password) {
@@ -18,7 +19,8 @@ export async function ormFindUserbyUsername(username) {
         return findUser
 }
 export async function ormFindOneUser(username,password) {
-    const findUser = await findOneUser({username,password});
+    const hash = bcrypt.hashSync(password, 10);
+    const findUser = await findOneUser({username,hash});
     return findUser
 }
 
