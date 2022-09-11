@@ -22,4 +22,6 @@ export async function createUser(params) {
 export async function findUserbyUsername(params) {
   return UserModel.find(params)
 }
-
+export async function findOneUser(params) {
+  return UserModel.findOne(params)
+}
