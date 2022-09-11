@@ -11,8 +11,8 @@ import { createUser, signIn } from './controller/user-controller.js';
 const router = express.Router()
 
 // Controller will contain all the User-defined Routes
-router.post('/', signIn)
-router.post('/', createUser)
+router.post('/signin', signIn)
+router.post('/signup', createUser)
 
 app.use('/api/user', router).all((_, res) => {
     res.setHeader('content-type', 'application/json')

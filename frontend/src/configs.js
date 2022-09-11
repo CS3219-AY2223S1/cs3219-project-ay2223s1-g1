@@ -5,3 +5,5 @@ const PREFIX_USER_SVC = '/api/user'
 
 export const URL_USER_SVC = URI_USER_SVC + PREFIX_USER_SVC
 export const URL_MATCHING_SVC = URI_MATCHING_SVC
+export const SIGNIN = '/signin'
+export const SIGNUP = '/signup'
