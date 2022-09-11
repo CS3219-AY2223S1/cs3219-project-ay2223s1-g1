@@ -1,8 +1,8 @@
 import { ormCreateUser as _createUser , 
     ormFindUserbyUsername as _FindUserbyUsername, 
     ormFindOneUser as _FindOneuser} from '../model/user-orm.js'
-import UserModel from '../model/user-model.js';
-
+import jwt from 'jsonwebtoken'
+import { ACCESS_TOKENT_SECRET } from '../constants/constants.js';
 export async function createUser(req, res) {
     try {
         const { username, password } = req.body;
@@ -31,7 +31,11 @@ export async function signIn(req, res) {
         const { username, password } = req.body;
         const user = await _FindOneuser(username,password)
         if (user) {
-            return res.status(201).json({message: `Log in is successful!`});
+            const accessToken = jwt.sign({username:username},ACCESS_TOKENT_SECRET)
+            console.log(accessToken)
+            // res.json({accessToken:accessToken})
+            res.cookie("accesstoken",accessToken,{httpOnly:true})
+            return res.status(201).json({message: `Log in is successful!`,accesstoken:accessToken });
         } else {
             return res.status(400).json({message: 'Incorrect username/password!'});
         }

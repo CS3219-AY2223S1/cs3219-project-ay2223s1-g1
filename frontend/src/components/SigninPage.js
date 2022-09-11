@@ -35,6 +35,8 @@ function SigninPage() {
             })
         console.log(res)
         if (res && res.status === STATUS_CODE_SUCCESS) {
+            const { accesstoken } = res.data.accesstoken
+            localStorage.setItem('accesstoken', accesstoken)
             setSuccessDialog('Login is successful!')
             setIsSigninSuccess(true)
         }
