@@ -26,7 +26,7 @@ function SigninPage() {
     const handleSignin = async () => {
         console.log("Woehoew")
         setIsSigninSuccess(false)
-        const res = await axios.get(URL_USER_SVC, { username, password })
+        const res = await axios.post(URL_USER_SVC, { username, password })
             .catch((err) => {
                 setErrorDialog('Please try again later')
             })
