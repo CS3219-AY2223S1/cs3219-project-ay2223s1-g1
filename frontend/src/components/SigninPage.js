@@ -34,7 +34,7 @@ function SigninPage() {
                 }
             })
         console.log(res)
-        if (res && res.status === STATUS_CODE_CREATED) {
+        if (res && res.status === STATUS_CODE_SUCCESS) {
             setSuccessDialog('Login is successful!')
             setIsSigninSuccess(true)
         }

@@ -33,7 +33,7 @@ function SignupPage() {
                     setErrorDialog('Please try again later')
                 }
             })
-        if (res && res.status === STATUS_CODE_CREATED) {
+        if (res && res.status === STATUS_CODE_SUCCESS) {
             setSuccessDialog('Account successfully created')
             setIsSignupSuccess(true)
         }
