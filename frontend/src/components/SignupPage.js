@@ -11,8 +11,8 @@ import {
 } from "@mui/material";
 import {useState} from "react";
 import axios from "axios";
-import {SIGNUP, URL_USER_SVC} from "../configs";
-import {STATUS_CODE_CONFLICT, STATUS_CODE_SUCCESS} from "../constants";
+import {SIGNUP, SIGNIN, DASHBOARD, URL_USER_SVC} from "../configs";
+import {STATUS_CODE_CONFLICT, STATUS_CODE_CREATED} from "../constants";
 import {Link} from "react-router-dom";
 
 function SignupPage() {
@@ -33,7 +33,7 @@ function SignupPage() {
                     setErrorDialog('Please try again later')
                 }
             })
-        if (res && res.status === STATUS_CODE_SUCCESS) {
+        if (res && res.status === STATUS_CODE_CREATED) {
             setSuccessDialog('Account successfully created')
             setIsSignupSuccess(true)
         }
@@ -76,7 +76,7 @@ function SignupPage() {
                 <Button variant={"outlined"} onClick={handleSignup}>Submit</Button>
             </Box>
             <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
-                <Button variant={"outlined"} component={Link} to="/signin">Sign In</Button>
+                <Button variant={"outlined"} component={Link} to={SIGNIN}>Sign In</Button>
             </Box>
 
             <Dialog
@@ -89,7 +89,7 @@ function SignupPage() {
                 </DialogContent>
                 <DialogActions>
                     {isSignupSuccess
-                        ? <Button component={Link} to="/dashboard">Log in</Button>
+                        ? <Button component={Link} to={DASHBOARD}>Log in</Button>
                         : <Button onClick={closeDialog}>Done</Button>
                     }
                 </DialogActions>
