@@ -9,6 +9,9 @@ function SelectDifficultyPage() {
 
     return (
         <Box display={"flex"} flexDirection={"column"} width={"70%"}>
+            <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
+                <Button component={Link} to="/account">User Account</Button>
+            </Box>
             <Typography variant={"h3"} marginBottom={"2rem"}>Select Difficulty Level</Typography>
 
             <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>

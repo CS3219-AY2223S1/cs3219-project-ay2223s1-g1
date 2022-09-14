@@ -1,4 +1,8 @@
-import { ormCreateUser as _createUser , ormFindUserbyUsername as _FindUserbyUsername} from '../model/user-orm.js'
+import { 
+    ormCreateUser as _createUser, 
+    ormFindUserbyUsername as _FindUserbyUsername,
+    ormDeleteUser as _deleteUser
+} from '../model/user-orm.js'
 import UserModel from '../model/user-model.js';
 
 export async function createUser(req, res) {
@@ -24,3 +28,22 @@ export async function createUser(req, res) {
     }
 }
 
+export async function deleteUserAccount(req, res) {
+    try {
+        const { username } = req.body;
+        if (!username) {
+            return res.status(400).json({message: 'Username cannot be empty'});}
+
+        console.log('Username for account deletion - ' + username)
+        const resp = await _deleteUser(username);
+        console.log(resp);
+        if (resp.err) {
+            return res.status(400).json({message: 'Could not delete user!'});
+        } else {
+            console.log(`Deleted user ${username} successfully!`)
+            return res.status(200).json({message: `Deleted user ${username} successfully!`});
+        }
+    } catch (err) {
+        return res.status(500).json({message: 'Database failure when creating new user!'})
+    }
+}

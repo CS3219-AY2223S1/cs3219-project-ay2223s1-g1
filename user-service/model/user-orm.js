@@ -13,6 +13,24 @@ export async function ormCreateUser(username, password) {
 }
 
 export async function ormFindUserbyUsername(username) {
+    const findUser = await findUserbyUsername({username});
+    return findUser
+}
+
+export async function ormDeleteUser(username) {
+    try {
         const findUser = await findUserbyUsername({username});
-        return findUser
+        if (findUser) {
+            findUser.delete();
+            return true;
+        } else {
+            console.log('ERROR: No user with given username')
+            const err = 'ERROR: No user with given username'
+            return { err }
+        }
+        
+    } catch (err) {
+        console.log('ERROR: Could not delete the user');
+        return { err };
+    }
 }
