@@ -1,16 +1,20 @@
 import Sequelize, { DataTypes } from 'sequelize';
 import sequelize from './repository.js';
 
-const User = sequelize.define("user", {
+const User = sequelize.define("User", {
     id: {
-        type: DataTypes.INTEGER,
-        autoIncrement: true,
+        type: DataTypes.STRING,
         allowNull: false,
         primaryKey: true
     },
-    difficulty: {
-        type: DataTypes.INTEGER,
+    name: {
+        type: DataTypes.STRING,
         allowNull: false
+    },
+    difficulty: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique:false
     }
 });
 

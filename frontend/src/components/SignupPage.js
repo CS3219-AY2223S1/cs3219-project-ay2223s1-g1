@@ -86,7 +86,7 @@ function SignupPage() {
                 </DialogContent>
                 <DialogActions>
                     {isSignupSuccess
-                        ? <Button component={Link} to="/dashboard">Log in</Button>
+                        ? <Button component={Link} to="/dashboard" state={{name: username }}>Log in</Button>
                         : <Button onClick={closeDialog}>Done</Button>
                     }
                 </DialogActions>
