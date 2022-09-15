@@ -8,3 +8,6 @@ export const URL_MATCHING_SVC = URI_MATCHING_SVC
 export const SIGNIN = '/signin'
 export const SIGNUP = '/signup'
 export const DASHBOARD = '/dashboard'
+export const DIFFICULTY = '/difficulty'
+export const LOGOUT = '/logout'
+
