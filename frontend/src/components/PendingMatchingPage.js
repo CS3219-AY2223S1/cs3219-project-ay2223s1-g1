@@ -48,6 +48,7 @@ function PendingMatchPage() {
             socket.on('delete confirm', (val) => {
                 console.log(val);
             });
+
         });
     }, []);
 
