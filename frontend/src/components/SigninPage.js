@@ -28,7 +28,7 @@ function SigninPage() {
 
     const handleSignin = async () => {
         setIsSigninSuccess(false)
-        const res = await axios.post(URL_USER_SVC+SIGNIN, { username, password })
+        const res = await axios.post(URL_USER_SVC+SIGNIN, { username, password },{withCredentials:true,credentials: "include"})
             .catch((err) => {
                 if (err.response.status === STATUS_CODE_CONFLICT) {
                     setErrorDialog('Incorrect username or password')
@@ -37,7 +37,6 @@ function SigninPage() {
                 }
             })
         if (res && res.status === STATUS_CODE_SUCCESS) {
-            console.log(res)
             const accesstoken  = res.data.accesstoken
             setUser({username:username,accesstoken:accesstoken})
             return <Navigate to={DASHBOARD} />

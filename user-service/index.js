@@ -5,7 +5,12 @@ import cookieParser from 'cookie-parser';
 const app = express();
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
-app.use(cors()) // config cors so that front-end can use
+const corsOptions = {
+    credentials: true,
+    origin: "http://localhost:3000",
+    optionsSuccessStatus: 200
+}
+app.use(cors(corsOptions)) // config cors so that front-end can use
 app.use(cookieParser())
 app.options('*', cors())
 import { createUser, signIn ,logout} from './controller/user-controller.js';

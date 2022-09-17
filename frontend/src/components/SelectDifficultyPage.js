@@ -9,20 +9,24 @@ import axios from "axios";
 import { URL_USER_SVC, LOGOUT} from "../configs";
 import {STATUS_CODE_CONFLICT, STATUS_CODE_CREATED} from "../constants";
 import { UserContext } from "../util/userContext";
+import {useCookies} from 'react-cookie'
 
 function SelectDifficultyPage() {
     const {user,setUser} = useContext(UserContext)
+    const [cookies] = useCookies()
     const handleLogout = async () => {
-        console.log(user)
-        // const res = await axios.post(URL_USER_SVC+LOGOUT)
-        //     .catch((err) => {
-        //         if (err.response.status === STATUS_CODE_CONFLICT) {
-        //             console.log("Error during log out")
-        //         }
-        //     })
-        // if (res && res.status === STATUS_CODE_CREATED) {
-        //     console.log("logout successful")
-        // }
+        const access_token = cookies["accesstoken"]
+        const res = await axios.post(URL_USER_SVC+LOGOUT,{withCredentials:true,credentials: "include"},{headers: {
+            Authorization: 'Bearer ' + access_token
+        }})
+            .catch((err) => {
+                if (err.response.status === STATUS_CODE_CONFLICT) {
+                    console.log("Error during log out")
+                }
+            })
+        if (res && res.status === STATUS_CODE_CREATED) {
+            console.log("logout successful")
+        }
     }
 
     return (
