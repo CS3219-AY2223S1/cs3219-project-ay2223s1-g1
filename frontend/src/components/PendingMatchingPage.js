@@ -52,17 +52,9 @@ function PendingMatchPage() {
         });
     }, []);
 
-    /*const handleMatch = async () => {
-        console.log(diff);
-        socket.emit('match', diff);
-        socket.on('matched room', (room_id) => {
-            //go to localhost:8080/room_id
-        })
-    }*/
 
     // Call to backend with difficulty level to match users
     // Front end to display relevant message and wait for 30 seconds or a match
-    //{foundMatch ? <Navigate to={roomId}/>:null}
     return (
         <Box display={"flex"} flexDirection={"column"} width={"70%"}>
             <Typography variant={"h3"} marginBottom={"2rem"}>Will match you to a user here!</Typography>

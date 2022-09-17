@@ -64,8 +64,3 @@ io.on("connection", (socket) => {
     })
 });
 
-/*matchUser('hello1', 'name', 'easy').then((val) => {
-    console.log(val);
-});*/
-
-
