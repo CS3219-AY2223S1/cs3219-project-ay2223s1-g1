@@ -5,6 +5,11 @@ let BlacklistModelSchema = new Schema({
         type: String,
         required: true,
         unique: true,
+    },
+    createdAt: {
+        type: Date,
+        expires: 600, 
+        required: true,
     }
 })
 

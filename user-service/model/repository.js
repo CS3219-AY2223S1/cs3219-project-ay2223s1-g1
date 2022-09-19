@@ -27,10 +27,17 @@ export async function findOneUser(params) {
   return UserModel.findOne(params)
 }
 
-export async function createBlacklist(params) { 
-  return new BlacklistModel(params);
+export async function createBlackList(params) { 
+  return new BlacklistModel(params)
 }
 
-export async function findBlacklist(token) {
-  return BlacklistModel.findOne({ token });
+export async function checkBlackList(token) { 
+  return db.collection("blacklistmodels")
+  .countDocuments({ token: token }, { limit: 1 }) 
+  .then(num => {
+    if (num > 0) {
+      return true;
+    }  
+    return false;
+  });
 }
