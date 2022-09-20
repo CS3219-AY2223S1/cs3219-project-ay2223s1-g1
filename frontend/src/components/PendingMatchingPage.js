@@ -35,9 +35,6 @@ function PendingMatchPage() {
             }, 30000);
 
             socket.on('room', (match_name, val) => {
-                console.log('printing room id inside', val);
-                console.log('user name is', name);
-                console.log('match name is', match_name);
                 clearTimeout(timeout);
                 setFoundMatch(true);
                 setMatchName(match_name);
@@ -46,7 +43,7 @@ function PendingMatchPage() {
             });
     
             socket.on('delete confirm', (val) => {
-                console.log(val);
+                console.log(val, 'is deleted');
             });
 
         });
