@@ -9,11 +9,13 @@ import {
     TextField,
     Typography
 } from "@mui/material";
-import {useState} from "react";
+import {BrowserRouter as Navigate} from "react-router-dom";
+import {useState, useContext} from "react";
 import axios from "axios";
-import {URL_USER_SVC} from "../configs";
-import {STATUS_CODE_CONFLICT, STATUS_CODE_CREATED} from "../constants";
+import {SIGNUP, SIGNIN, DASHBOARD,  URL_USER_SVC} from "../configs";
+import { STATUS_CODE_BAD_REQUEST ,STATUS_CODE_SUCCESS} from "../constants";
 import {Link} from "react-router-dom";
+import { UserContext } from "../util/userContext";
 
 function SigninPage() {
     const [username, setUsername] = useState("")
@@ -22,18 +24,22 @@ function SigninPage() {
     const [dialogTitle, setDialogTitle] = useState("")
     const [dialogMsg, setDialogMsg] = useState("")
     const [isSigninSuccess, setIsSigninSuccess] = useState(false)
+    const {user,setUser} = useContext(UserContext)
 
     const handleSignin = async () => {
-        console.log("Woehoew")
         setIsSigninSuccess(false)
-        const res = await axios.get(URL_USER_SVC, { username, password })
+        const res = await axios.post(URL_USER_SVC+SIGNIN, { username, password },{withCredentials:true,credentials: "include"})
             .catch((err) => {
-                setErrorDialog('Please try again later')
+                if (err.response.status === STATUS_CODE_BAD_REQUEST) {
+                    setErrorDialog('Incorrect username or password')
+                } else {
+                    setErrorDialog('Please try again later')
+                }
             })
-        console.log(res)
-        if (res && res.status === STATUS_CODE_CREATED) {
-            setSuccessDialog('Account successfully created')
-            setIsSigninSuccess(true)
+        if (res && res.status === STATUS_CODE_SUCCESS) {
+            const accesstoken  = res.data.accesstoken
+            setUser({username:username,accesstoken:accesstoken})
+            return <Navigate to={DASHBOARD} />
         }
     }
 
@@ -71,7 +77,12 @@ function SigninPage() {
                 sx={{marginBottom: "2rem"}}
             />
             <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
-                <Button variant={"outlined"} onClick={handleSignin}>Sign in</Button>
+                <Button variant={"outlined"} onClick={handleSignin}>Submit</Button>
+            </Box>
+
+
+            <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
+                <Button variant={"outlined"} component={Link} to={SIGNUP}>Sign Up</Button>
             </Box>
 
             <Dialog
@@ -84,7 +95,7 @@ function SigninPage() {
                 </DialogContent>
                 <DialogActions>
                     {isSigninSuccess
-                        ? <Button component={Link} to="/signin">Log in</Button>
+                        ? <Button component={Link} to={DASHBOARD}>Done</Button>
                         : <Button onClick={closeDialog}>Done</Button>
                     }
                 </DialogActions>
