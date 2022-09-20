@@ -7,7 +7,7 @@ import {BrowserRouter as Navigate} from "react-router-dom";
 import {useContext} from "react";
 import {Link} from "react-router-dom";
 import axios from "axios";
-import { URL_USER_SVC, LOGOUT, PROFILE} from "../configs";
+import { URL_USER_SVC, LOGOUT, PROFILE, DIFFICULTY} from "../configs";
 import {STATUS_CODE_CONFLICT, STATUS_CODE_SUCCESS} from "../constants";
 import { UserContext } from "../util/userContext";
 
@@ -27,29 +27,25 @@ function SelectDifficultyPage() {
             setUser(null)
         }
     }
-    const handleProfile = () => {
-        console.log("navigating")
-        return <Navigate to={PROFILE} />
-    }
     return (
         <Box display={"flex"} flexDirection={"column"} width={"70%"}>
             <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
                 <Button variant={"outlined"} onClick={handleLogout}>Logout</Button>
             </Box>
             <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
-            <Button component={Link} to="/profile">Profile</Button>
+            <Button component={Link} to={PROFILE}>Profile</Button>
             </Box>
 
             <Typography variant={"h3"} marginBottom={"2rem"}>Select Difficulty Level</Typography>
 
             <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
-                <Button component={Link} to="/difficulty" state={{diff: 'easy'}}>Easy</Button>
+                <Button component={Link} to={DIFFICULTY} state={{diff: 'easy'}}>Easy</Button>
             </Box>
             <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
-                <Button component={Link} to="/difficulty" state={{diff: 'medium'}}>Medium</Button>
+                <Button component={Link} to={DIFFICULTY} state={{diff: 'medium'}}>Medium</Button>
             </Box>
             <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
-                <Button component={Link} to="/difficulty" state={{diff: 'hard'}}>Hard</Button>
+                <Button component={Link} to={DIFFICULTY} state={{diff: 'hard'}}>Hard</Button>
             </Box>
         </Box>
     )

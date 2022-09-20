@@ -13,7 +13,7 @@ import {BrowserRouter as Navigate} from "react-router-dom";
 import {useState, useContext} from "react";
 import axios from "axios";
 import {SIGNUP, SIGNIN, DASHBOARD,  URL_USER_SVC} from "../configs";
-import { STATUS_CODE_CONFLICT ,STATUS_CODE_SUCCESS} from "../constants";
+import { STATUS_CODE_BAD_REQUEST ,STATUS_CODE_SUCCESS} from "../constants";
 import {Link} from "react-router-dom";
 import { UserContext } from "../util/userContext";
 
@@ -30,7 +30,7 @@ function SigninPage() {
         setIsSigninSuccess(false)
         const res = await axios.post(URL_USER_SVC+SIGNIN, { username, password },{withCredentials:true,credentials: "include"})
             .catch((err) => {
-                if (err.response.status === STATUS_CODE_CONFLICT) {
+                if (err.response.status === STATUS_CODE_BAD_REQUEST) {
                     setErrorDialog('Incorrect username or password')
                 } else {
                     setErrorDialog('Please try again later')

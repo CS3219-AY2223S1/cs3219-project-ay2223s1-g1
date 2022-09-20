@@ -45,7 +45,8 @@ export async function signIn(req, res) {
             //refresh token in cookie
             //access token in data
             if(validatePassword(password, user.password)){
-                return res.cookie("refreshtoken",refreshToken,{httpOnly:true}).status(200).json({message: `Log in is successful!`,accesstoken:accessToken });
+                res.cookie("refreshtoken",refreshToken,{httpOnly:true})
+                return res.status(200).json({message: `Log in is successful!`,accesstoken:accessToken });
             }  else {
                 return res.status(400).json({message: 'Incorrect username/password!'});
             }
@@ -65,11 +66,11 @@ export async function logout(req, res) {
         // Get token from request
         const accessToken = req.accessToken
         if (!accessToken) {
-            return res.status(401).json({message: 'Token is missing or invalid!'});
+            return res.status(401).json({message: 'Token is missing!'});
         }
         const resp = await _addBlackList(accessToken);
         if (resp.err) {
-            return res.status(409).json({message: 'Unable to add to blacklist'});
+            return res.status(500).json({message: 'Unable to add to blacklist'});
         } else {
             return res.status(200).json({ message: "User logout is successful" })
         }
@@ -81,32 +82,27 @@ export async function logout(req, res) {
 export async function updateUser(req, res) {
     try {
         const { username } = req.user
-        const token = req.accessToken
         const resp = await _FindUserbyUsername(username)
         if (resp.err) {
             logger.error(resp.err)
             return res.status(400).json({ message: "Could not get user info" })
         }
         const user = resp[0]
-        let passwordUpdated = false
         if (req.body?.oldPassword && req.body?.newPassword) {
             if (req.body.oldPassword === req.body.newPassword) {
                 return res.status(400).json({ message: "Previous password and updated password cannot be the same" })
             }
             if(!validatePassword(req.body.oldPassword, user.password)){
-                console.log("incorrect")
                 return res.status(400).json({message: 'Incorrect old password!'});
             }
             user.password = hashPassword(req.body.newPassword,username)
             passwordUpdated = true
+            user.save()
+            return res.status(200).json({ message: "Update user info successfully"})
+        } else {
+            return res.status(400).json({ message: "Could not get password info" })
         }
-        user.save()
-        if (passwordUpdated) {
-            return res.status(200)
-                .json({
-                    message: "Update user info successfully",
-                })
-        }
+               
     } catch (err) {
         return res.status(500).json({ message: "Database failure when updating user" })
     }
