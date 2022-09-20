@@ -40,29 +40,7 @@ export async function matchUser(id, name, difficulty) {
             }
         });
         return user_result;
-        //const match_user = await findUser(difficulty);
-        //console.log(match_user);
-        /*if (match_user == null) {
-            console.log('yo');
-            const new_user = await createUser(id, difficulty);
-            console.log('hi after');
-            const intervalId = setInterval(() => {
-                const find_user = findUserId(new_user.id)
-                if (find_user != null) {
-                  console.log('match found with new user');
-                  clearInterval(intervalId);
-                  return id;
-                }
-              }, 30000);
-            console.log('hola');
-            return null;
-        } else {
-            const id = match_user.id;
-            console.log(id);
-            //deleteUser(id, difficulty);
-            //console.log('match found with pending user');
-            //return id;
-        }*/
+        
     } catch (err) {
         console.log(err)
         return -2;
