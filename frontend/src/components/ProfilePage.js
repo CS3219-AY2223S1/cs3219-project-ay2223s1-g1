@@ -11,9 +11,9 @@ import {
 
 import {useState, useContext} from "react";
 import {Link} from "react-router-dom";
-import axios from "axios";
 import { URL_USER_SVC, LOGOUT, DASHBOARD} from "../configs";
 import {STATUS_CODE_CONFLICT, STATUS_CODE_SUCCESS, STATUS_CODE_BAD_REQUEST} from "../constants";
+import useAxios from "../util/useAxios";
 import { UserContext } from "../util/userContext";
 
 function ProfilePage() {
@@ -24,7 +24,7 @@ function ProfilePage() {
     const [isDialogOpen, setIsDialogOpen] = useState(false)
     const [dialogTitle, setDialogTitle] = useState("")
     const [dialogMsg, setDialogMsg] = useState("")
-
+    const axios = useAxios()
     const closeDialog = () => setIsDialogOpen(false)
 
     const setSuccessDialog = (msg) => {
@@ -39,10 +39,7 @@ function ProfilePage() {
     }
 
     const handleLogout = async () => {
-        const accesstoken = user.accesstoken
-        const res = await axios.post(URL_USER_SVC+LOGOUT,{withCredentials:true,credentials: "include"},{headers: {
-            Authorization: 'Bearer ' + accesstoken
-        }})
+        const res = await axios.post(URL_USER_SVC+LOGOUT,{withCredentials:true,credentials: "include"})
             .catch((err) => {
                 if (err.response.status === STATUS_CODE_CONFLICT) {
                     console.log("Error during log out")
@@ -53,16 +50,6 @@ function ProfilePage() {
         }
     }
     const handleUpdate = async () => {
-        const accesstoken = user.accesstoken
-        axios.interceptors.request.use(
-            config => {
-              config.headers['Authorization'] = `Bearer ${accesstoken}`;
-                  return config;
-              },
-              error => {
-                  return Promise.reject(error);
-              }
-          );
         const res = await axios.put(URL_USER_SVC, {oldPassword, newPassword },{withCredentials:true,credentials: "include"}).catch((err) => {
                 if (err.response.status === STATUS_CODE_BAD_REQUEST) {
                     setErrorDialog(err.response.data.message)
