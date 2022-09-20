@@ -1,4 +1,5 @@
 import UserModel from './user-model.js';
+import BlacklistModel from './blacklist-model.js';
 import 'dotenv/config'
 
 //Set up mongoose connection
@@ -26,3 +27,17 @@ export async function findOneUser(params) {
   return UserModel.findOne(params)
 }
 
+export async function createBlackList(params) { 
+  return new BlacklistModel(params)
+}
+
+export async function checkBlackList(token) { 
+  return db.collection("blacklistmodels")
+  .countDocuments({ token: token }, { limit: 1 }) 
+  .then(num => {
+    if (num > 0) {
+      return true;
+    }  
+    return false;
+  });
+}
