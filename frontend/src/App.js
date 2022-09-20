@@ -4,7 +4,6 @@ import SigninPage from './components/SigninPage';
 import ProfilePage from './components/ProfilePage';
 import SelectDifficultyPage from './components/SelectDifficultyPage';
 import PendingMatchingPage from './components/PendingMatchingPage';
-import AccountDetailsPage from './components/AccountDetailsPage';
 import {Box} from "@mui/material";
 import {useState} from "react";
 import { UserContext } from "./util/userContext";
