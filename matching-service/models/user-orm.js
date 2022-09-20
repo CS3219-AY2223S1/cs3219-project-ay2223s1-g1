@@ -41,16 +41,3 @@ export async function deleteUser(id, difficulty) {
     });
 }
 
-/*export async function ormMatchUser(difficulty) {
-    user_match = await User.findOne({ where: {difficulty: difficulty}});
-
-    if (user_match) {
-        id = user_match.id;
-        User.destroy({where: {id: id, difficulty:difficulty}});
-        return user_match;
-    } else {
-        createUser(difficulty);
-        return null;
-    }
-}*/
-
