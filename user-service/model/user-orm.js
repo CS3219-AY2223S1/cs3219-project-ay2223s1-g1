@@ -1,10 +1,10 @@
-import { createUser, findUserbyUsername, findOneUser } from './repository.js';
+import { createUser, findUserbyUsername, findOneUser , checkBlackList, createBlackList} from './repository.js';
 import bcrypt from 'bcrypt'
 
 //need to separate orm functions from repository to decouple business logic from persistence
 export async function ormCreateUser(username, password) {
     try {
-        const hash = bcrypt.hashSync(password, username.length);
+        const hash = hashPassword(password,username);
         const newUser = await createUser({username:username, password:hash});
         newUser.save();
         return true;
@@ -24,3 +24,23 @@ export async function ormFindOneUser(username,password) {
     return findUser
 }
 
+export async function ormAddBlacklist(token) {
+    try {
+        if(!await checkBlackList(token)){
+            const newBlacklist = await createBlackList({token:token, createdAt: Date.now()});
+            newBlacklist.save();
+            return true;
+        }
+    } catch (err) {
+        console.log('ERROR: Could not add to blacklist!');
+        return { err };
+    }
+}
+
+export function hashPassword(password,username) {
+    const hash = bcrypt.hashSync(password, username.length);
+    return hash
+}
+export function validatePassword(password, hashedPassword) {
+    return bcrypt.compareSync(password, hashedPassword)
+}
