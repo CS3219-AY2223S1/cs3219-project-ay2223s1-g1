@@ -88,20 +88,20 @@ export async function updateUser(req, res) {
             return res.status(400).json({ message: "Could not get user info" })
         }
         const user = resp[0]
-        if (req.body?.oldPassword && req.body?.newPassword) {
-            if (req.body.oldPassword === req.body.newPassword) {
-                return res.status(400).json({ message: "Previous password and updated password cannot be the same" })
-            }
-            if(!validatePassword(req.body.oldPassword, user.password)){
-                return res.status(400).json({message: 'Incorrect old password!'});
-            }
-            user.password = hashPassword(req.body.newPassword,username)
-            passwordUpdated = true
-            user.save()
-            return res.status(200).json({ message: "Update user info successfully"})
-        } else {
+        if(!(req.body?.oldPassword && req.body?.newPassword)){
             return res.status(400).json({ message: "Could not get password info" })
         }
+        if (req.body.oldPassword === req.body.newPassword) {
+                return res.status(400).json({ message: "Previous password and updated password cannot be the same" })
+                
+            }
+        if(!validatePassword(req.body.oldPassword, user.password)){
+                return res.status(400).json({message: 'Incorrect old password!'});
+            }
+        user.password = hashPassword(req.body.newPassword,username)
+        user.save()
+        return res.status(200).json({ message: "Update user info successfully"})
+        
                
     } catch (err) {
         return res.status(500).json({ message: "Database failure when updating user" })

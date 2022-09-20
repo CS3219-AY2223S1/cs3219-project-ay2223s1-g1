@@ -65,7 +65,7 @@ function ProfilePage() {
           );
         const res = await axios.put(URL_USER_SVC, {oldPassword, newPassword },{withCredentials:true,credentials: "include"}).catch((err) => {
                 if (err.response.status === STATUS_CODE_BAD_REQUEST) {
-                    setErrorDialog('Error with old password')
+                    setErrorDialog(err.response.data.message)
                 } else {
                     setErrorDialog('Error while changing password')
                 }
