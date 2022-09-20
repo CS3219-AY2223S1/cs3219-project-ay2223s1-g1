@@ -14,29 +14,24 @@ export async function createUser(id, name, difficulty) {
 
 export async function numUsers() {
     User.findAll().then((result) => {
-        console.log(result);
     });
 }
 
 export async function findUser(diff) {
-    console.log('enters find user func');
     var match = sequelize.sync().then((result) => {
         return User.findOne(
             {
                 where: {difficulty: diff}
             });
-    });
-    console.log(match);                                
+    });                      
     return match;
 }
 
 export async function findUserId(id) {
-    console.log('goes to id func');
     var user_check = sequelize.sync().then((result) => {
             return User.findOne({ where: { id: id } });
         }
     );
-    console.log(user_check);
     return user_check;
 }
 
