@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import { createUser, signIn ,logout , updateUser} from './controller/user-controller.js';
+import { createUser, signIn, logout, updateUser, deleteUser} from './controller/user-controller.js';
 import { authenticateToken } from './middleware.js';
 
 const app = express();
@@ -16,14 +16,14 @@ app.use(cors(corsOptions)) // config cors so that front-end can use
 app.use(cookieParser())
 app.options('*', cors())
 
-
 const router = express.Router()
 
 // Controller will contain all the User-defined Routes
 router.post('/signin', signIn)
 router.post('/signup', createUser)
-router.post('/logout', authenticateToken,logout)
-router.put('/', authenticateToken,updateUser)
+router.post('/logout', authenticateToken, logout)
+router.put('/', authenticateToken, updateUser)
+router.delete('/', authenticateToken, deleteUser)
 
 app.use('/api/user', router).all((_, res) => {
     res.setHeader('content-type', 'application/json')

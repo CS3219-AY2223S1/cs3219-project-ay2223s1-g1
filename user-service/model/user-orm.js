@@ -15,9 +15,10 @@ export async function ormCreateUser(username, password) {
 }
 
 export async function ormFindUserbyUsername(username) {
-        const findUser = await findUserbyUsername({username});
-        return findUser
+    const findUser = await findUserbyUsername({username});
+    return findUser
 }
+
 export async function ormFindOneUser(username,password) {
     const hash = bcrypt.hashSync(password, username.length);
     const findUser = await findOneUser({username,hash});
