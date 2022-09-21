@@ -4,6 +4,7 @@ import SigninPage from './components/SigninPage';
 import ProfilePage from './components/ProfilePage';
 import SelectDifficultyPage from './components/SelectDifficultyPage';
 import PendingMatchingPage from './components/PendingMatchingPage';
+import Room from './components/Room';
 import {Box} from "@mui/material";
 import {useState} from "react";
 import { UserContext } from "./util/userContext";
@@ -22,6 +23,7 @@ const [user, setUser] = useState(null)
                         <Route path={DASHBOARD} element={<SelectDifficultyPage/>}/>
                         <Route path={DIFFICULTY} element={<PendingMatchingPage/>}/>
                         <Route path={PROFILE} element={<ProfilePage/>}/>
+                        <Route path="/room/*" element={<Room/>}/>
                         </Routes>:
                         <Routes>
                         <Route exact path="/*" element={<Navigate replace to={SIGNIN} />}></Route>

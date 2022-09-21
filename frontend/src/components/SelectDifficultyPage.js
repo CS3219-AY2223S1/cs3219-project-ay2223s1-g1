@@ -3,15 +3,18 @@ import {
     Button,
     Typography
 } from "@mui/material";
+
+import {Link, useLocation} from "react-router-dom";
 import {BrowserRouter as Navigate} from "react-router-dom";
 import {useContext} from "react";
-import {Link} from "react-router-dom";
 import { URL_USER_SVC, LOGOUT, PROFILE, DIFFICULTY} from "../configs";
 import {STATUS_CODE_CONFLICT, STATUS_CODE_SUCCESS} from "../constants";
 import { UserContext } from "../util/userContext";
 import useAxios from "../util/useAxios";
 
 function SelectDifficultyPage() {
+    const location = useLocation()
+    const { name } = location.state;
     const {user,setUser} = useContext(UserContext)
     const axios = useAxios()
     const handleLogout = async () => {
@@ -25,6 +28,7 @@ function SelectDifficultyPage() {
             setUser(null)
         }
     }
+
     return (
         <Box display={"flex"} flexDirection={"column"} width={"70%"}>
             <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
@@ -37,13 +41,13 @@ function SelectDifficultyPage() {
             <Typography variant={"h3"} marginBottom={"2rem"}>Select Difficulty Level</Typography>
 
             <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
-                <Button component={Link} to={DIFFICULTY} state={{diff: 'easy'}}>Easy</Button>
+                <Button component={Link} to="/difficulty" state={{diff: 'easy', name: name}}>Easy</Button>
             </Box>
             <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
-                <Button component={Link} to={DIFFICULTY} state={{diff: 'medium'}}>Medium</Button>
+                <Button component={Link} to="/difficulty" state={{diff: 'medium', name: name}}>Medium</Button>
             </Box>
             <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
-                <Button component={Link} to={DIFFICULTY} state={{diff: 'hard'}}>Hard</Button>
+                <Button component={Link} to="/difficulty" state={{diff: 'hard', name: name}}>Hard</Button>
             </Box>
         </Box>
     )
