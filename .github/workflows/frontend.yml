@@ -2,9 +2,9 @@ name: Frontend service
 
 on:
   push:
-    paths: [ "/frontend/**" ]
+    paths: [ "frontend/**" ]
     branches: 
-      - "**"
+      - '**'
 
 jobs:
   build:
@@ -12,7 +12,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./frontend/
+        working-directory: ./frontend
 
     steps:
     - uses: actions/checkout@v3

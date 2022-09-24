@@ -2,17 +2,17 @@ name: Matching service
 
 on:
   push:
-    paths: [ "/matching-service/**" ]
+    paths: [ "matching-service/**" ]
     branches: 
-      - "**"
-      
+      - '**'
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     defaults:
       run:
-        working-directory: ./matching-service/
+        working-directory: ./matching-service
 
     steps:
     - uses: actions/checkout@v3

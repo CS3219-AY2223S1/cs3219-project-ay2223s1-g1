@@ -2,9 +2,9 @@ name: User service
 
 on:
   push:
-    paths: [ "/user-service/**" ]
+    paths: [ "user-service/**" ]
     branches: 
-      - "**"
+      - '**'
 
 jobs:
   build:
@@ -12,7 +12,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./user-service/
+        working-directory: ./user-service
 
     steps:
     - uses: actions/checkout@v3
