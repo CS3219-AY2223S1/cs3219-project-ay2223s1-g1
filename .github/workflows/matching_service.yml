@@ -3,8 +3,9 @@ name: Matching service
 on:
   push:
     paths: [ "/matching-service/**" ]
-    branches: "*"
-
+    branches: 
+      - "**"
+      
 jobs:
   build:
     runs-on: ubuntu-latest

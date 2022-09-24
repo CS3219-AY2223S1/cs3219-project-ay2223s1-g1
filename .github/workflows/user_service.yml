@@ -3,7 +3,8 @@ name: User service
 on:
   push:
     paths: [ "/user-service/**" ]
-    branches: "*"
+    branches: 
+      - "**"
 
 jobs:
   build:
