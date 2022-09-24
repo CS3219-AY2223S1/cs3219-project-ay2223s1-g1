@@ -2,9 +2,9 @@ name: Frontend service
 
 on:
   push:
-    paths: [ "frontend/**" ]
     branches: 
       - '**'
+
 
 jobs:
   build:
