@@ -6,7 +6,6 @@ import {
     DialogContent,
     DialogContentText,
     Button,
-    DialogTitle,
 } from "@mui/material";
 import { useLocation, Navigate, Link } from "react-router-dom";
 import { io } from "socket.io-client";
