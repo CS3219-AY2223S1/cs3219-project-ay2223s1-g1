@@ -24,6 +24,7 @@ function SigninPage() {
     const [dialogTitle, setDialogTitle] = useState("")
     const [dialogMsg, setDialogMsg] = useState("")
     const [isSigninSuccess, setIsSigninSuccess] = useState(false)
+    // eslint-disable-next-line
     const {user,setUser} = useContext(UserContext)
 
     const handleSignin = async () => {
@@ -38,18 +39,12 @@ function SigninPage() {
             })
         if (res && res.status === STATUS_CODE_SUCCESS) {
             const accesstoken  = res.data.accesstoken
-            setUser({username:username,accesstoken:accesstoken})
+            setUser({username:username, accesstoken:accesstoken})
             return <Navigate to={DASHBOARD} />
         }
     }
 
     const closeDialog = () => setIsDialogOpen(false)
-
-    const setSuccessDialog = (msg) => {
-        setIsDialogOpen(true)
-        setDialogTitle('Success')
-        setDialogMsg(msg)
-    }
 
     const setErrorDialog = (msg) => {
         setIsDialogOpen(true)
