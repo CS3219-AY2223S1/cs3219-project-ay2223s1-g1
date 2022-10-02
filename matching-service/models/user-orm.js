@@ -1,5 +1,4 @@
 import User from './user.js';
-import Sequelize, { DataTypes, Op } from 'sequelize';
 import sequelize from './repository.js';
 
 export async function createUser(id, name, difficulty) {
@@ -13,25 +12,22 @@ export async function createUser(id, name, difficulty) {
 }
 
 export async function numUsers() {
-    User.findAll().then((result) => {
-    });
+    User.findAll().then((result) => {});
 }
 
 export async function findUser(diff) {
     var match = sequelize.sync().then((result) => {
-        return User.findOne(
-            {
-                where: {difficulty: diff}
-            });
+        return User.findOne({
+            where: {difficulty: diff}
+        });
     });                      
     return match;
 }
 
 export async function findUserId(id) {
     var user_check = sequelize.sync().then((result) => {
-            return User.findOne({ where: { id: id } });
-        }
-    );
+        return User.findOne({ where: { id: id } });
+    });
     return user_check;
 }
 
@@ -40,4 +36,3 @@ export async function deleteUser(id, difficulty) {
         User.destroy({where: {id: id, difficulty:difficulty}});
     });
 }
-

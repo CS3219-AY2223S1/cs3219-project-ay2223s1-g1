@@ -14,7 +14,7 @@ export async function createUser(req, res) {
         const { username, password } = req.body;
         const duplicate = await _FindUserbyUsername(username)
         if (duplicate.length > 0) {
-            console.log(`Request to create new user failed - duplicate username = ${username}`)
+            console.log(`Duplicate username requested in user creation - ${username}`)
             return res.status(409).json({message: 'Duplicate username!'});}
         if (username && password) {
             const resp = await _createUser(username, password);
@@ -44,7 +44,7 @@ export async function signIn(req, res) {
             user.save()
             if(validatePassword(password, user.password)){
                 res.cookie("refreshtoken", refreshToken, {httpOnly:true})
-                console.log(`User=${username} logged in successfully!`)
+                console.log(`User ${username} logged in successfully!`)
                 return res.status(200).json({message: `Log in is successful!`,accesstoken:accessToken });
             }  else {
                 return res.status(400).json({message: 'Username and/or Password are missing!'});
@@ -70,7 +70,7 @@ export async function logout(req, res) {
         if (resp.err) {
             return res.status(500).json({message: 'Unable to add to blacklist'});
         } else {
-            console.log(`User=${username} logged out successfully!`)
+            console.log(`User ${username} logged out successfully!`)
             return res.status(200).json({ message: "User logout is successful" })
         }
     } catch (err) {
@@ -99,7 +99,7 @@ export async function updateUser(req, res) {
             }
         user.password = hashPassword(req.body.newPassword,username)
         user.save()
-        console.log(`User=${username} info updated successfully!`)
+        console.log(`User ${username} info updated successfully!`)
         return res.status(200).json({ message: "Update user info successfully"})    
     } catch (err) {
         return res.status(500).json({ message: "Database failure when updating user" })
@@ -116,7 +116,7 @@ export async function deleteUser(req, res) {
         }
         const user = resp[0]
         user.delete()
-        console.log(`Deleted user username=${username} successfully`)
+        console.log(`Deleted user ${username} successfully`)
         return res.status(200).json({ message: "Update user info successfully"})    
     } catch (err) {
         return res.status(500).json({ message: "Database failure when updating user" })
