@@ -1,28 +1,12 @@
-import { createUser, deleteUser, findUser, findUserId, numUsers} from '../models/user-orm.js'
-import User from '../models/user.js';
-
-async function check_user(id) {
-    findUserId(id).then((find_user) => {
-        if (find_user == null) {
-            console.log('match found');
-            clearInterval();
-            return id;
-        } else {
-            console.log('no match');
-            return -1;
-        }
-    });
-}
+import { createUser, deleteUser, findUser, findUserId } from '../models/user-orm.js'
 
 export async function matchUser(id, name, difficulty) {
     try {
         const user_result = findUser(difficulty).then((result) => {
             if (result == null) {
-                console.log('creating new user');
                 createUser(id, name, difficulty).then((res) => {
-                    console.log(res);
+                    console.log("Creating new user in matching service - ", res);
                 });
-                
                 return null;
             } else {
                 return findUserId(id).then((res) => {
@@ -30,20 +14,18 @@ export async function matchUser(id, name, difficulty) {
                         const socket_val = result.id;
                         const match_name = result.name;
                         deleteUser(result.id, difficulty);
-                        console.log('match is found');
+                        console.log('Match for ', name, ' is ', match_name);
                         return [match_name, socket_val];
                     } else {
-                        console.log('value already exists, still no match is found');
+                        console.log('Unable to find match for user');
                         return null;
                     }
                 });
             }
         });
         return user_result;
-        
     } catch (err) {
-        console.log(err)
-        return -2;
+        return [-1, err];
     }
 }
 

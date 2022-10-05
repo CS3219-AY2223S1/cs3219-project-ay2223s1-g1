@@ -11,4 +11,4 @@ export const DASHBOARD = '/dashboard'
 export const DIFFICULTY = '/difficulty'
 export const LOGOUT = '/logout'
 export const PROFILE = '/profile'
-
+export const ROOM = '/room'
