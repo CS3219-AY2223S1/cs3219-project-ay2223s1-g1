@@ -16,7 +16,7 @@ const [user, setUser] = useState(null)
         <div className="App">
             <Box display={"flex"} flexDirection={"column"} padding={"4rem"}>
                 <Router>
-                    <UserContext.Provider value={{user,setUser}}>
+                    <UserContext.Provider value={{user, setUser}}>
                         {user?
                         <Routes>
                         <Route exact path="/*" element={<Navigate replace to={DASHBOARD} />}></Route>
