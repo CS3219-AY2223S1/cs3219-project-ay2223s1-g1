@@ -6,12 +6,16 @@ import SelectDifficultyPage from './components/SelectDifficultyPage';
 import PendingMatchingPage from './components/PendingMatchingPage';
 import Room from './components/Room';
 import {Box} from "@mui/material";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import { UserContext } from "./util/userContext";
 import {SIGNUP, SIGNIN, DASHBOARD, DIFFICULTY, PROFILE} from "./configs";
 
 function App() {
 const [user, setUser] = useState(null)
+useEffect(()=>{
+    setUser(JSON.parse(localStorage.getItem('user')))
+},[])
+
     return (
         <div className="App">
             <Box display={"flex"} flexDirection={"column"} padding={"4rem"}>

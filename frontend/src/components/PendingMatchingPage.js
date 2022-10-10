@@ -50,7 +50,7 @@ function PendingMatchPage() {
             });
 
         });
-    });
+    }, []);
 
     return (
         <Box display={"flex"} flexDirection={"column"} width={"70%"}>

@@ -18,6 +18,7 @@ function SelectDifficultyPage() {
                 }
             })
         if (res && res.status === STATUS_CODE_SUCCESS) {
+            localStorage.setItem("user",null)
             setUser(null)
         }
     }
