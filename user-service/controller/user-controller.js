@@ -62,6 +62,7 @@ export async function signIn(req, res) {
 export async function logout(req, res) {
     try {
         // Get token from request
+        const { username } = req.user
         const accessToken = req.accessToken
         if (!accessToken) {
             return res.status(401).json({message: 'Token is missing!'});
