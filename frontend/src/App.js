@@ -14,7 +14,20 @@ import QuestionsPage from "./components/questionsPage";
 function App() {
 const [user, setUser] = useState(null)
 useEffect(()=>{
-    setUser(JSON.parse(localStorage.getItem('user')))
+    let temp = JSON.parse(localStorage.getItem('user'))
+    if (temp?.expiration){
+        let now = new Date()
+        var UTCdate = new Date(temp.expiration)
+        if(UTCdate>now){
+            setUser(JSON.parse(localStorage.getItem('user')))
+        } else{
+            localStorage.setItem('user',null)
+            setUser(null)
+        }
+    } else{
+        localStorage.setItem('user',null)
+        setUser(null)
+    }
 },[])
 
     return (

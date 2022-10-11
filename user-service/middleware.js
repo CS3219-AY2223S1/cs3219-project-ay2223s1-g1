@@ -26,7 +26,6 @@ export async function authenticateToken(req, res, next) {
 
         jwt.verify(token, ACCESS_TOKEN_SECRET, (err, user) => {
             if (err) {
-                logger.error(err)
                 return res.status(401).json({ message: "Invalid access token" });
             }
             req.user = user;
