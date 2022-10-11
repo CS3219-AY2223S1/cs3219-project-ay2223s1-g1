@@ -1,38 +1,39 @@
 import {
     ormCreateQuestion as _createQuestion,
     ormGetAllQuestion as _getAllQuestion,
-    // ormDeleteQuestion as _deleteQuestion,
+    ormDeleteQuestion as _deleteQuestion,
+    ormGetRandomQuestionFromDifficulty as _getRandomQuestionFromDifficulty
 } from "../model/question-orm.js";
 
-// export async function getQuestion(req, res) {
-//     try {
-//         const { difficulty } = req.body;
-//         if (difficulty) {
-//             const resp = await _getQuestion(difficulty);
-//             console.log(resp);
-//             if(resp.err) {
-//                 return res
-//                     .status(400)
-//                     .json({ message: "Could not retrieve Question"});
-//             } else {
-//                 console.log(`retrieved question ${difficulty} successfully!`);
-//                 return res
-//                     .status(200)
-//                     .json({
-//                         data: resp.question
-//                     });
-//             }
-//         } else {
-//             return res
-//                 .status(400)
-//                 .json({ message: "Difficulty is missing" })
-//         }
-//     } catch (err) {
-//         return res
-//             .status(500)
-//             .json({ message: "Database failure when retrieving queston" });
-//     }
-// }
+export async function getRandomQuestionFromDifficulty(req, res) {
+    try {
+        const { difficulty } = req.params;
+        if (difficulty) {
+            const resp = await _getRandomQuestionFromDifficulty(difficulty);
+            console.log(resp);
+            if(resp.err) {
+                return res
+                    .status(400)
+                    .json({ message: "Could not retrieve Question"});
+            } else {
+                console.log(`retrieved question ${difficulty} successfully!`);
+                return res
+                    .status(200)
+                    .json(
+                     resp.question
+                    );
+            }
+        } else {
+            return res
+                .status(400)
+                .json({ message: "Difficulty is missing" })
+        }
+    } catch (err) {
+        return res
+            .status(500)
+            .json({ message: "Database failure when retrieving queston" });
+    }
+}
 
 export async function getAllQuestion(req, res) {
     try {
@@ -85,30 +86,32 @@ export async function createQuestion(req, res) {
     }
 }
 
-// export async function deleteQuestion(req, res) {
-//     try {
-//         const { index, difficulty } = req.body;
-//         if (index && difficulty) {
-//             const resp = await _deleteQuestion(index, difficulty);
-//             console.log(resp);
-//             if(resp.err) {
-//                 return res
-//                     .status(400)
-//                     .json({ message: "Could not delete question"});
-//             } else {
-//                 console.log("Question deleted successfully!");
-//                 return res
-//                     .status(200)
-//                     .json({ message: "Question deleted successfully!"});
-//             }
-//         } else {
-//             return res
-//                 .status(400)
-//                 .json({ message: "Index and/or difficulty are missing!"})
-//         }
-//     } catch (err) {
-//         return res
-//             .status(500)
-//             .json({ message: "Database failure when deleting question!"});
-//     }
-// }
+
+export async function deleteQuestion(req, res) {
+    try {
+        const { question_id } = req.params;
+        if (question_id) {
+            console.log(question_id)
+            const resp = await _deleteQuestion(question_id);
+            console.log(resp);
+            if(resp.err) {
+                return res
+                    .status(400)
+                    .json({ message: "Could not delete question"});
+            } else {
+                console.log("Question deleted successfully!");
+                return res
+                    .status(200)
+                    .json({ message: "Question deleted successfully!"});
+            }
+        } else {
+            return res
+                .status(400)
+                .json({ message: "Id is missing!"})
+        }
+    } catch (err) {
+        return res
+            .status(500)
+            .json({ message: "Database failure when deleting question!"});
+    }
+}

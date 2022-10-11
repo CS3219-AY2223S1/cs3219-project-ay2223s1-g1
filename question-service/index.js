@@ -3,7 +3,8 @@ import cors from 'cors';
 import {
     createQuestion,
     getAllQuestion,
-    // deleteQuestion
+    deleteQuestion,
+    getRandomQuestionFromDifficulty
 } from './controller/question-controller.js';
 
 const app = express()
@@ -25,7 +26,8 @@ app.get('/', (req, res) => {
 
 router.get("/", getAllQuestion);
 router.post("/", createQuestion);
-// router.delete("/", deleteQuestion);
+router.delete("/:question_id", deleteQuestion);
+router.get("/:difficulty", getRandomQuestionFromDifficulty);
 
 app.use('/api/question', router).all((_, res) => {
     res.setHeader('content-type', 'application/json')

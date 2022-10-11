@@ -32,6 +32,9 @@ function QuestionsPage() {
     const [isDialogOpen, setIsDialogOpen] = useState(false)
     const [dialogTitle, setDialogTitle] = useState("")
     const [dialogMsg, setDialogMsg] = useState("")
+    const [deleteId, setdeleteId] = useState("")
+    const [specificDifficulty, setspecificDifficulty] = useState("")
+    const [specificData,setspecificData] = useState()
     const axios = useAxios()
     const closeDialog = () => setIsDialogOpen(false)
 
@@ -40,6 +43,7 @@ function QuestionsPage() {
         setTitle("")
         setQuestion("")
         setDifficulty("")
+        setdeleteId("")
         setDialogTitle('Success')
         setDialogMsg(msg)
     }
@@ -49,7 +53,7 @@ function QuestionsPage() {
         setDialogMsg(msg)
     }
 
-    const handleSubmit = async () => {
+    const handleAddition = async () => {
         const res = await axios.post(URL_QUESTION_SVC, {title, question, difficulty},{withCredentials:true,credentials: "include"}).catch((err) => {
                 if (err.response.status === STATUS_CODE_BAD_REQUEST) {
                     setErrorDialog(err.response.data.message)
@@ -59,21 +63,48 @@ function QuestionsPage() {
             })
         if (res && res.status === STATUS_CODE_CREATED) {
             setSuccessDialog('Question Successfully created!')
+            getAllQuestions()
         }
     }
 
-    const getQuestions = async () => {
+    const handleDelete = async () => {
+        const res = await axios.delete(URL_QUESTION_SVC+`/${deleteId}`,{withCredentials:true,credentials: "include"}).catch((err) => {
+            if (err.response.status === STATUS_CODE_BAD_REQUEST) {
+                setErrorDialog(err.response.data.message)
+            } else {
+                setErrorDialog('Error while deleting question')
+            }
+        })
+        if (res && res.status === STATUS_CODE_SUCCESS) {
+            setSuccessDialog('Question Successfully deleted!')
+            getAllQuestions()
+        }
+        
+    }
+
+    const handleFind = async () => {
+        const res = await axios.get(URL_QUESTION_SVC+`/${specificDifficulty}`,{withCredentials:true,credentials: "include"}).catch((err) => {
+            if (err.response.status === STATUS_CODE_BAD_REQUEST) {
+                console.log(err.response.data.message)
+            }
+        })
+        if (res && res.status === STATUS_CODE_SUCCESS) {
+            setspecificData(res.data[0])
+        }
+    }
+
+    const getAllQuestions = async () => {
         const res = await axios.get(URL_QUESTION_SVC,{withCredentials:true,credentials: "include"}).catch((err) => {
             if (err.response.status === STATUS_CODE_BAD_REQUEST) {
                 console.log(err.response.data.message)
             }
         })
-    if (res && res.status === STATUS_CODE_SUCCESS) {
-        setAllquestions(res.data)
-    }
+        if (res && res.status === STATUS_CODE_SUCCESS) {
+            setAllquestions(res.data)
+        }
     }
     useEffect(()=>{
-        getQuestions()
+        getAllQuestions()
     },[])
 
     return (
@@ -107,8 +138,42 @@ function QuestionsPage() {
                 autoFocus
             />
             <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
-                <Button variant={"outlined"} onClick={handleSubmit}>Submit</Button>
+                <Button variant={"outlined"} onClick={handleAddition}>Add</Button>
             </Box>
+            <br></br>
+            <Typography variant={"h5"} marginBottom={"10px"}>Delete a question: (For admins only) </Typography>
+            <TextField
+                label="Id"
+                variant="standard"
+                value={deleteId}
+                onChange={(e) => setdeleteId(e.target.value)}
+                sx={{marginBottom: "1rem"}}
+                autoFocus
+            />
+            <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
+                <Button variant={"outlined"} onClick={handleDelete}>Delete</Button>
+            </Box>
+            <Typography variant={"h5"} marginBottom={"10px"}>Select a question at random based on difficulty</Typography>
+            <TextField
+                label="Difficulty"
+                variant="standard"
+                value={specificDifficulty}
+                onChange={(e) => setspecificDifficulty(e.target.value)}
+                sx={{marginBottom: "1rem"}}
+                autoFocus
+            />
+            <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
+                <Button variant={"outlined"} onClick={handleFind}>Find</Button>
+            </Box>
+            <br></br>
+            {specificData?"index: "+ specificData.index:null}
+            <br></br>
+            {specificData?"Title: "+specificData.title:null}
+            <br></br>
+            {specificData?"Question: "+specificData.question:null}
+            <br></br>
+            {specificData?"Difficulty: "+specificData.difficulty:null}
+            <br></br>
             <br></br>
             <Dialog
                 open={isDialogOpen}
@@ -126,6 +191,7 @@ function QuestionsPage() {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
+          <TableCell align="right" width="10">ID</TableCell>
             <TableCell align="right" width="10">Index</TableCell>
             <TableCell align="right"width="10">Title</TableCell>
             <TableCell align="right"width="10">Difficulty</TableCell>
@@ -138,6 +204,7 @@ function QuestionsPage() {
               key={row.title}
               sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
             >
+                <TableCell align="right">{row._id}</TableCell>
               <TableCell align="right">{row.index}</TableCell>
               <TableCell align="right">{row.title}</TableCell>
               <TableCell align="right">{row.difficulty}</TableCell>

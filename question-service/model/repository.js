@@ -29,29 +29,19 @@ export async function createQuestion(params) {
     return new QuestionModel({index:index, title: title, difficulty: difficulty, question: question});
 }
 
-// export async function checkQuestionRange(params) {
-//     let size = await QuestionModel.countDocuments({difficulty: params.difficulty});
-//     console.log(size);
-//     console.log(params.difficulty)
-//     return params.index <= size;
-// }
 
-// export async function getQuestion(difficulty) {
-//     let question = await QuestionModel.aggregate([
-//         { $match: { difficulty: difficulty }},
-//         { $sample: { size: 1 }}
-//     ])
-//     return question;
-// }
+export async function getRandomQuestionFromDifficulty(difficulty) {
+    let question = await QuestionModel.findOne({difficulty:difficulty})
+    return question;
+}
 
 export async function getAllQuestion() {
     let question = await QuestionModel.find()
     return question;
 }
 
-// export async function deleteQuestion(params) {
-//     console.log("deleting question")
-//     let paramIndex = params.index;
-//     let paramDifficulty = params.difficulty;
-//     await QuestionModel.findOneAndDelete({ index: paramIndex, difficulty: paramDifficulty});
-// }
+export async function deleteQuestion(params) {
+    console.log("deleting question")
+    let id = params.id;
+    await QuestionModel.findOneAndDelete({ _id: id});
+}
