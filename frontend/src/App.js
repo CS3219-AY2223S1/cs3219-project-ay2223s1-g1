@@ -27,7 +27,6 @@ useEffect(()=>{
         localStorage.setItem('user',null)
         setUser(null)
     }
-    setUser(JSON.parse(localStorage.getItem('user')))
 },[])
 
     return (
