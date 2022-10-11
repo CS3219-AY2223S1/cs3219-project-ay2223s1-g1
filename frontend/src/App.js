@@ -13,6 +13,20 @@ import {SIGNUP, SIGNIN, DASHBOARD, DIFFICULTY, PROFILE} from "./configs";
 function App() {
 const [user, setUser] = useState(null)
 useEffect(()=>{
+    let temp = JSON.parse(localStorage.getItem('user'))
+    if (temp?.expiration){
+        let now = new Date()
+        var UTCdate = new Date(temp.expiration)
+        if(UTCdate>now){
+            setUser(JSON.parse(localStorage.getItem('user')))
+        } else{
+            localStorage.setItem('user',null)
+            setUser(null)
+        }
+    } else{
+        localStorage.setItem('user',null)
+        setUser(null)
+    }
     setUser(JSON.parse(localStorage.getItem('user')))
 },[])
 
