@@ -39,7 +39,9 @@ function SigninPage() {
             })
         if (res && res.status === STATUS_CODE_SUCCESS) {
             const accesstoken  = res.data.accesstoken
-            localStorage.setItem('user', JSON.stringify({username:username, accesstoken:accesstoken}));
+            var today = new Date();
+            today.setHours(today.getHours() + 1);
+            localStorage.setItem('user', JSON.stringify({username:username, accesstoken:accesstoken,expiration:today}));
             setUser({username:username, accesstoken:accesstoken})
             return <Navigate to={DASHBOARD} />
         }
