@@ -89,7 +89,7 @@ function QuestionsPage() {
             }
         })
         if (res && res.status === STATUS_CODE_SUCCESS) {
-            setspecificData(res.data[0])
+            setspecificData(res.data)
         }
     }
 

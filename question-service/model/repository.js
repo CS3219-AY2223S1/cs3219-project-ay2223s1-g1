@@ -41,7 +41,6 @@ export async function getAllQuestion() {
 }
 
 export async function deleteQuestion(params) {
-    console.log("deleting question")
     let id = params.id;
     await QuestionModel.findOneAndDelete({ _id: id});
 }

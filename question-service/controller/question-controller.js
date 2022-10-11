@@ -10,7 +10,6 @@ export async function getRandomQuestionFromDifficulty(req, res) {
         const { difficulty } = req.params;
         if (difficulty) {
             const resp = await _getRandomQuestionFromDifficulty(difficulty);
-            console.log(resp);
             if(resp.err) {
                 return res
                     .status(400)
