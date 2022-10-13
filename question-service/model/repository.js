@@ -31,7 +31,10 @@ export async function createQuestion(params) {
 
 
 export async function getRandomQuestionFromDifficulty(difficulty) {
-    let question = await QuestionModel.findOne({difficulty:difficulty})
+    let question = await QuestionModel.aggregate([
+    { $match: {difficulty:difficulty} },
+    { $sample: { size: 1 } }
+    ])
     return question;
 }
 
