@@ -1,7 +1,7 @@
 import { Box, Button, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { useContext } from "react";
-import { URL_USER_SVC, LOGOUT, PROFILE } from "../configs";
+import { URL_USER_SVC, LOGOUT, PROFILE, DIFFICULTY, QUESTIONS } from "../configs";
 import { STATUS_CODE_CONFLICT, STATUS_CODE_SUCCESS } from "../constants";
 import { UserContext } from "../util/userContext";
 import useAxios from "../util/useAxios";
@@ -18,6 +18,7 @@ function SelectDifficultyPage() {
                 }
             })
         if (res && res.status === STATUS_CODE_SUCCESS) {
+            localStorage.setItem("user",null)
             setUser(null)
         }
     }
@@ -31,12 +32,17 @@ function SelectDifficultyPage() {
                 <Button component={Link} to={PROFILE}>Profile</Button>
             </Box>
 
-            <Typography variant={"h3"} marginBottom={"2rem"}>Select Difficulty Level</Typography>
+            
 
-            <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
-                <Button component={Link} to="/difficulty" state={{diff: 'easy', name: user}}>Easy</Button>
-                <Button component={Link} to="/difficulty" state={{diff: 'medium', name: user}}>Medium</Button>
-                <Button component={Link} to="/difficulty" state={{diff: 'hard', name: user}}>Hard</Button>
+            <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-start"}>
+                <Typography variant={"h5"} marginBottom={"10px"}>Select Difficulty Level : </Typography>
+                <Button component={Link} to={DIFFICULTY} state={{diff: 'easy', name: user}}>Easy</Button>
+                <Button component={Link} to={DIFFICULTY} state={{diff: 'medium', name: user}}>Medium</Button>
+                <Button component={Link} to={DIFFICULTY} state={{diff: 'hard', name: user}}>Hard</Button>
+            </Box>
+            <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-start"}>
+                <Typography variant={"h5"} marginBottom={"10px"}>For question service:</Typography>
+                <Button component={Link} to={QUESTIONS}>View all available questions</Button>
             </Box>
         </Box>
     )

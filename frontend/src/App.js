@@ -6,12 +6,30 @@ import SelectDifficultyPage from './components/SelectDifficultyPage';
 import PendingMatchingPage from './components/PendingMatchingPage';
 import Room from './components/Room';
 import {Box} from "@mui/material";
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import { UserContext } from "./util/userContext";
-import {SIGNUP, SIGNIN, DASHBOARD, DIFFICULTY, PROFILE} from "./configs";
+import {SIGNUP, SIGNIN, DASHBOARD, DIFFICULTY, PROFILE, QUESTIONS} from "./configs";
+import QuestionsPage from "./components/questionsPage";
 
 function App() {
 const [user, setUser] = useState(null)
+useEffect(()=>{
+    let temp = JSON.parse(localStorage.getItem('user'))
+    if (temp?.expiration){
+        let now = new Date()
+        var UTCdate = new Date(temp.expiration)
+        if(UTCdate>now){
+            setUser(JSON.parse(localStorage.getItem('user')))
+        } else{
+            localStorage.setItem('user',null)
+            setUser(null)
+        }
+    } else{
+        localStorage.setItem('user',null)
+        setUser(null)
+    }
+},[])
+
     return (
         <div className="App">
             <Box display={"flex"} flexDirection={"column"} padding={"4rem"}>
@@ -23,6 +41,7 @@ const [user, setUser] = useState(null)
                         <Route path={DASHBOARD} element={<SelectDifficultyPage/>}/>
                         <Route path={DIFFICULTY} element={<PendingMatchingPage/>}/>
                         <Route path={PROFILE} element={<ProfilePage/>}/>
+                        <Route path={QUESTIONS} element={<QuestionsPage/>}/>
                         <Route path="/room/*" element={<Room/>}/>
                         </Routes>:
                         <Routes>

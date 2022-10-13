@@ -1,17 +1,13 @@
 import UserModel from './user-model.js';
 import BlacklistModel from './blacklist-model.js';
-import 'dotenv/config'
+import * as dotenv from 'dotenv';
+dotenv.config({path:'./../.env'})
 
 //Set up mongoose connection
 import mongoose from 'mongoose';
 
 let mongoDB = process.env.ENV == "PROD" ? process.env.DB_CLOUD_URI : process.env.DB_LOCAL_URI;
-
-if(mongoDB == undefined){
-  mongoose.connect("mongodb://localhost:27017/mydb", { useNewUrlParser: true , useUnifiedTopology: true});
-} else{
-  mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
-}
+mongoose.connect(mongoDB, { useNewUrlParser: true , useUnifiedTopology: true});
 
 
 let db = mongoose.connection;

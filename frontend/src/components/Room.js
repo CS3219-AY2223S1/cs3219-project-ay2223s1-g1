@@ -15,6 +15,9 @@ import {
 import { useLocation, Navigate, Link } from "react-router-dom";
 import { io } from "socket.io-client";
 import {useState, useEffect} from "react";
+import { TextArea } from "@progress/kendo-react-inputs";
+import Select from 'react-select';
+
 
 function Room() {
     const location = useLocation()
@@ -24,6 +27,21 @@ function Room() {
     const [string, setString] = useState("")
     const [messages, setMessage] = useState([])
     const [checked, setChecked] = useState(true);
+    const [text, setText] = useState("")
+    const [langChoice, setLangChoice] = useState("free")
+    const languageChoices = [
+        {label: 'Freestyle', value: 'Freestyle'},
+        {label: 'C', value: 'C'},
+        {label: 'C++', value: 'C++'},
+        {label: 'GoLang', value: 'GoLang'},
+        {label: 'Haskell', value: 'Haskell'},
+        {label: 'Java', value: 'Java'},
+        {label: 'Javascript', value: 'Javascript'},
+        {label: 'OCaml', value: 'OCaml'},
+        {label: 'Prolog', value: 'Prolog'},
+        {label: 'Python', value: 'Python'},
+        {label: 'Scala', value: 'Scala'},
+    ];
 
     const socket = io("http://localhost:8001");
     const socketChat = io("http://localhost:8002");
@@ -33,8 +51,16 @@ function Room() {
             socket.emit("store", name, socket.id);
     
             socket.on('match leave', (message) => {
-                setMatchLeaves(true)
-                console.log(message)
+              setMatchLeaves(true)
+              console.log(message)
+            })
+
+            socket.on('update_lang_choice', (new_lang_choice) => {
+              setLangChoice(new_lang_choice)
+            })
+
+            socket.on('update_text', (text) => {
+              setText(text)
             })
         });    
     }, []);
@@ -50,10 +76,12 @@ function Room() {
         });
     });
 
+
     const sendMessage = async() => {
         const info = [false, string];
         setMessage([...messages, info]);
-        socketChat.emit('send', matchName, string);
+        socketChat.emit('send', matchName, string);   
+    })
 
     }
     
@@ -62,6 +90,16 @@ function Room() {
         setIsLeave(true);
     }
     
+
+    const onChangeLangChoice = newLangChoice => {
+        setLangChoice(newLangChoice.value);
+        socket.emit("update_match_lang_choice", matchName, newLangChoice.value);
+    }
+
+    const onChangeText = new_text => {
+        setText(new_text.value);
+        socket.emit("update_match", matchName, new_text.value);
+    }
 
     return (
         <Box display={"flex"} flexDirection={"column"} width={"80%"}>
@@ -113,6 +151,15 @@ function Room() {
                 </Box>
             </Box>
 
+            <Select 
+                value={langChoice}
+                placeholder={langChoice}
+                options={languageChoices} 
+                onChange={onChangeLangChoice}
+            />
+            
+            <TextArea value={text} onChange={onChangeText} />
+
             <Button onClick={handleLeave}>Leave room</Button>
 
             {isLeave ? <Navigate component={Link} to="/dashboard" state={{name: name}}/>:null}
@@ -129,5 +176,3 @@ function Room() {
 }
 
 export default Room;
-
-

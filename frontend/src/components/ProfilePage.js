@@ -17,7 +17,7 @@ import useAxios from "../util/useAxios";
 import { UserContext } from "../util/userContext";
 
 function ProfilePage() {
-    const {user,setUser} = useContext(UserContext)
+    const {setUser} = useContext(UserContext)
     const [oldPassword, setOldPassword] = useState("")
     const [newPassword, setNewPassword] = useState("")
     const [newPasswordRepeat, setNewPasswordRepeat] = useState("")
@@ -46,6 +46,7 @@ function ProfilePage() {
                 }
             })
         if (res && res.status === STATUS_CODE_SUCCESS) {
+            localStorage.setItem("user",null)
             setUser(null)
         }
     }
