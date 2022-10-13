@@ -50,10 +50,20 @@ io.on("connection", (socket) => {
 
     socket.on('store', (name, id) => {
         sessionHash[name] = id
-    })
+    });
+
     socket.on('leave', (user, match_user) => {
         const match_user_id = sessionHash[match_user]
         socket.to(match_user_id).emit('match leave', user + " is leaving the room");
-    })
-});
+    });
 
+    socket.on('update_match_lang_choice', (match_user, new_choice) => {
+        const match_user_id = sessionHash[match_user]
+        socket.to(match_user_id).emit('update_lang_choice', new_choice);
+    });
+
+    socket.on('update_match', (match_user, new_text) => {
+        const match_user_id = sessionHash[match_user]
+        socket.to(match_user_id).emit('update_text', new_text);
+    });
+});
