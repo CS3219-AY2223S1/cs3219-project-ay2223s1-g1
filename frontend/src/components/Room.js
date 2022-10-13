@@ -21,7 +21,7 @@ function Room() {
     const { name, matchName, roomId } = location.state
     const [isLeave, setIsLeave] = useState(false)
     const [matchLeaves, setMatchLeaves] = useState(false)
-    const [text, setText] = useState("")
+    const [string, setString] = useState("")
     const [messages, setMessage] = useState([])
     const [checked, setChecked] = useState(true);
 
@@ -51,10 +51,9 @@ function Room() {
     });
 
     const sendMessage = async() => {
-        const info = [false, text];
+        const info = [false, string];
         setMessage([...messages, info]);
-        console.log('switch is', checked);
-        socketChat.emit('send', matchName, text);
+        socketChat.emit('send', matchName, string);
 
     }
     
@@ -105,8 +104,8 @@ function Room() {
                     <TextField
                     label="Message"
                     variant="standard"
-                    value={text}
-                    onChange={(e) => setText(e.target.value)}
+                    value={string}
+                    onChange={(e) => setString(e.target.value)}
                     sx={{marginBottom: "1rem"}}
                     autoFocus
                     />
