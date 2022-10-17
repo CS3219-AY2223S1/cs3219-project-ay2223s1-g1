@@ -82,8 +82,6 @@ function Room() {
         setMessage([...messages, info]);
         socketChat.emit('send', matchName, string);   
     }
-
-    }
     
     const handleLeave = async() => {
         socket.emit("leave", name, matchName);
