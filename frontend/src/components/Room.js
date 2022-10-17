@@ -81,7 +81,7 @@ function Room() {
         const info = [false, string];
         setMessage([...messages, info]);
         socketChat.emit('send', matchName, string);   
-    })
+    }
 
     }
     
