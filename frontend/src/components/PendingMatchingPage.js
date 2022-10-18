@@ -60,7 +60,7 @@ function PendingMatchPage() {
                 var url = ROOM + '/' + val;
                 setRoomId(url);
             });
-    
+
             socket.on('delete confirm', (val) => {
                 console.log(val, 'is deleted');
             });
@@ -72,8 +72,7 @@ function PendingMatchPage() {
         <Box display={"flex"} flexDirection={"column"} width={"70%"}>
             <Typography variant={"h3"} marginBottom={"2rem"}>Will match you to a user here!</Typography>
             <Typography variant={"h5"} marginBottom={"2rem"}>Chosen Difficulty: {diff}</Typography>
-            {foundMatch ? <Navigate to={roomId} state={{name: user.username, matchName: matchName, diff:diff,question:question}}/>:null}
-            
+            {foundMatch ? <Navigate to={roomId} state={{name: user.username, matchName: matchName, diff:diff,question:question, roomId: roomId}}/>:null}
             <Dialog open={noMatchFound}>
                 <DialogContent>
                     <DialogContentText>Sorry, we could not find a match for you!</DialogContentText>
