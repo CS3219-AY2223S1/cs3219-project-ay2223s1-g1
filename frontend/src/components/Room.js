@@ -178,7 +178,7 @@ function Room() {
             <br></br>
             <br></br>
             <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
-                <Button variant={"outlined"} onClick={handleFind}>Find</Button>
+                <Button variant={"outlined"} onClick={handleFind}>Get a question</Button>
             </Box>
             <Select 
                 value={langChoice}
