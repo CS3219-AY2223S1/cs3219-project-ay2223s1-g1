@@ -13,20 +13,36 @@ import { io } from "socket.io-client";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { UserContext } from "../util/userContext";
+import {URL_QUESTION_SVC} from "../configs";
+import { STATUS_CODE_BAD_REQUEST, STATUS_CODE_SUCCESS} from "../constants";
+import useAxios from "../util/useAxios";
 
 function PendingMatchPage() {
     const location = useLocation()
     const { diff } = location.state
     // eslint-disable-next-line
-    const { user, setUser } = useContext(UserContext)
+    const axios = useAxios()
+    const { user } = useContext(UserContext)
     const [roomId, setRoomId] = useState("")
     const [foundMatch, setFoundMatch] = useState(false)
     const [matchName, setMatchName] = useState("")
     const [noMatchFound, setNoMatchFound] = useState(false);
+    const [question, setQuestion] = useState();
+
+    const findQuestionbyDifficulty = async () => {
+        const res = await axios.get(URL_QUESTION_SVC+`/${diff}`,{withCredentials:true,credentials: "include"}).catch((err) => {
+            if (err.response.status === STATUS_CODE_BAD_REQUEST) {
+                console.log(err.response.data.message)
+            }
+        })
+        if (res && res.status === STATUS_CODE_SUCCESS) {
+            setQuestion(res.data[0])
+        }
+    }
 
     useEffect(() => {
         const socket = io(URL_MATCHING_SVC);
-
+        findQuestionbyDifficulty();
         socket.on("connect", () => {
             console.log('socket is connected on client side', socket.id, 'with this id');
 
@@ -49,13 +65,14 @@ function PendingMatchPage() {
                 console.log(val, 'is deleted');
             });
         });
+        // eslint-disable-next-line
     }, []);
 
     return (
         <Box display={"flex"} flexDirection={"column"} width={"70%"}>
             <Typography variant={"h3"} marginBottom={"2rem"}>Will match you to a user here!</Typography>
             <Typography variant={"h5"} marginBottom={"2rem"}>Chosen Difficulty: {diff}</Typography>
-            {foundMatch ? <Navigate to={roomId} state={{name: user.username, matchName: matchName}}/>:null}
+            {foundMatch ? <Navigate to={roomId} state={{name: user.username, matchName: matchName, diff:diff,question:question}}/>:null}
             
             <Dialog open={noMatchFound}>
                 <DialogContent>

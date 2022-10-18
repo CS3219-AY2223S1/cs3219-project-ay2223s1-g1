@@ -15,7 +15,7 @@ import Select from 'react-select';
 
 function Room() {
     const location = useLocation()
-    const { name, matchName } = location.state
+    const { name, matchName , diff, question} = location.state
     const [isLeave, setIsLeave] = useState(false)
     const [matchLeaves, setMatchLeaves] = useState(false)
     const [text, setText] = useState("")
@@ -72,7 +72,15 @@ function Room() {
         <Box display={"flex"} flexDirection={"column"} width={"70%"}>
             <Typography variant={"h5"} marginBottom={"2rem"}>User name: {name}</Typography>
             <Typography variant={"h5"} marginBottom={"2rem"}>Match name: {matchName}</Typography>
-
+            <Typography variant={"h5"} marginBottom={"2rem"}>Difficulty: {diff}</Typography>
+            <br></br>
+            {question?<Typography variant={"h6"} marginBottom={"0.5rem"}>Question details is as follows:</Typography>:null}
+            {question?<Typography variant={"h6"} marginBottom={"0.5rem"}>Index: {question.index}</Typography>:null}
+            {question?<Typography variant={"h6"} marginBottom={"0.5rem"}>Title: {question.title}</Typography>:null}
+            {question?<Typography variant={"h6"} marginBottom={"0.5rem"}>Question: {question.question}</Typography>:null}
+            {question?<Typography variant={"h6"} marginBottom={"0.5rem"}>Difficulty: {question.difficulty}</Typography>:null}
+            <br></br>
+            <br></br>
             <Select 
                 value={langChoice}
                 placeholder={langChoice}
