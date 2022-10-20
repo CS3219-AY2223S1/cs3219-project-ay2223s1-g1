@@ -14,11 +14,12 @@ import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { UserContext } from "../util/userContext";
 
+
 function PendingMatchPage() {
     const location = useLocation()
     const { diff } = location.state
     // eslint-disable-next-line
-    const { user, setUser } = useContext(UserContext)
+    const { user } = useContext(UserContext)
     const [roomId, setRoomId] = useState("")
     const [foundMatch, setFoundMatch] = useState(false)
     const [matchName, setMatchName] = useState("")
@@ -26,7 +27,6 @@ function PendingMatchPage() {
 
     useEffect(() => {
         const socket = io(URL_MATCHING_SVC);
-
         socket.on("connect", () => {
             console.log('socket is connected on client side', socket.id, 'with this id');
 
@@ -49,14 +49,14 @@ function PendingMatchPage() {
                 console.log(val, 'is deleted');
             });
         });
+        // eslint-disable-next-line
     }, []);
 
     return (
         <Box display={"flex"} flexDirection={"column"} width={"70%"}>
             <Typography variant={"h3"} marginBottom={"2rem"}>Will match you to a user here!</Typography>
             <Typography variant={"h5"} marginBottom={"2rem"}>Chosen Difficulty: {diff}</Typography>
-            {foundMatch ? <Navigate to={roomId} state={{name: user.username, matchName: matchName, roomId: roomId}}/>:null}
-            
+            {foundMatch ? <Navigate to={roomId} state={{name: user.username, matchName: matchName, diff:diff}}/>:null}
             <Dialog open={noMatchFound}>
                 <DialogContent>
                     <DialogContentText>Sorry, we could not find a match for you!</DialogContentText>

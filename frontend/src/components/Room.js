@@ -17,17 +17,21 @@ import { io } from "socket.io-client";
 import {useState, useEffect} from "react";
 import { TextArea } from "@progress/kendo-react-inputs";
 import Select from 'react-select';
-
+import { STATUS_CODE_BAD_REQUEST, STATUS_CODE_SUCCESS} from "../constants";
+import {URL_QUESTION_SVC} from "../configs";
+import useAxios from "../util/useAxios";
 
 function Room() {
     const location = useLocation()
-    const { name, matchName, roomId } = location.state
+    const axios = useAxios()
+    const { name, matchName , diff} = location.state
     const [isLeave, setIsLeave] = useState(false)
     const [matchLeaves, setMatchLeaves] = useState(false)
     const [string, setString] = useState("")
     const [messages, setMessage] = useState([])
     const [checked, setChecked] = useState(true);
     const [text, setText] = useState("")
+    const [question,setQuestion]= useState("")
     const [langChoice, setLangChoice] = useState("free")
     const languageChoices = [
         {label: 'Freestyle', value: 'Freestyle'},
@@ -62,7 +66,11 @@ function Room() {
             socket.on('update_text', (text) => {
               setText(text)
             })
-        });    
+            socket.on('update_question', (questionData) => {
+                setQuestion(questionData)
+              })
+        });
+        // eslint-disable-next-line    
     }, []);
 
     socketChat.on('connect', () => {
@@ -82,6 +90,7 @@ function Room() {
         setMessage([...messages, info]);
         socketChat.emit('send', matchName, string);   
     }
+
     
     const handleLeave = async() => {
         socket.emit("leave", name, matchName);
@@ -99,8 +108,20 @@ function Room() {
         socket.emit("update_match", matchName, new_text.value);
     }
 
+    const handleFind = async () => {
+        const res = await axios.get(URL_QUESTION_SVC+`/${diff}`,{withCredentials:true,credentials: "include"}).catch((err) => {
+            if (err.response.status === STATUS_CODE_BAD_REQUEST) {
+                console.log(err.response.data.message)
+            }
+        })
+        if (res && res.status === STATUS_CODE_SUCCESS) {
+            setQuestion(res.data[0])
+            socket.emit("update_question", matchName, res.data[0]);
+        }
+    }
+
     return (
-        <Box display={"flex"} flexDirection={"column"} width={"80%"}>
+        <Box display={"flex"} flexDirection={"column"} width={"70%"}>
             <Box sx={{
                     display: 'flex',
                     flexDirection: 'row'
@@ -148,7 +169,17 @@ function Room() {
                     <Button onClick={sendMessage}>Send</Button>
                 </Box>
             </Box>
-
+            <br></br>
+            {question?<Typography variant={"h6"} marginBottom={"0.5rem"}>Question details is as follows:</Typography>:null}
+            {question?<Typography variant={"h6"} marginBottom={"0.5rem"}>Index: {question.index}</Typography>:null}
+            {question?<Typography variant={"h6"} marginBottom={"0.5rem"}>Title: {question.title}</Typography>:null}
+            {question?<Typography variant={"h6"} marginBottom={"0.5rem"}>Question: {question.question}</Typography>:null}
+            {question?<Typography variant={"h6"} marginBottom={"0.5rem"}>Difficulty: {question.difficulty}</Typography>:null}
+            <br></br>
+            <br></br>
+            <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
+                <Button variant={"outlined"} onClick={handleFind}>Get a question</Button>
+            </Box>
             <Select 
                 value={langChoice}
                 placeholder={langChoice}

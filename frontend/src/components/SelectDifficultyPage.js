@@ -36,9 +36,9 @@ function SelectDifficultyPage() {
 
             <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-start"}>
                 <Typography variant={"h5"} marginBottom={"10px"}>Select Difficulty Level : </Typography>
-                <Button component={Link} to={DIFFICULTY} state={{diff: 'easy', name: user}}>Easy</Button>
-                <Button component={Link} to={DIFFICULTY} state={{diff: 'medium', name: user}}>Medium</Button>
-                <Button component={Link} to={DIFFICULTY} state={{diff: 'hard', name: user}}>Hard</Button>
+                <Button component={Link} to={DIFFICULTY} state={{diff: 'Easy', name: user}}>Easy</Button>
+                <Button component={Link} to={DIFFICULTY} state={{diff: 'Medium', name: user}}>Medium</Button>
+                <Button component={Link} to={DIFFICULTY} state={{diff: 'Hard', name: user}}>Hard</Button>
             </Box>
             <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-start"}>
                 <Typography variant={"h5"} marginBottom={"10px"}>For question service:</Typography>
