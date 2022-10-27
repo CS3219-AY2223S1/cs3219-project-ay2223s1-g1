@@ -38,18 +38,6 @@ function ProfilePage() {
         setDialogMsg(msg)
     }
 
-    const handleLogout = async () => {
-        const res = await axios.post(URL_USER_SVC+LOGOUT,{withCredentials:true,credentials: "include"})
-            .catch((err) => {
-                if (err.response.status === STATUS_CODE_CONFLICT) {
-                    console.log("Error during log out")
-                }
-            })
-        if (res && res.status === STATUS_CODE_SUCCESS) {
-            localStorage.setItem("user",null)
-            setUser(null)
-        }
-    }
 
     const handleUpdate = async () => {
         const res = await axios.put(URL_USER_SVC, {oldPassword, newPassword },{withCredentials:true,credentials: "include"}).catch((err) => {
@@ -78,13 +66,7 @@ function ProfilePage() {
     return (
         <Box display={"flex"} flexDirection={"column"} width={"70%"}>
             <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
-                <Button variant={"outlined"} onClick={handleLogout}>Logout</Button>
-            </Box>
-            <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
                 <Button variant={"outlined"} onClick={handleDelete}>Delete Account</Button>
-            </Box>
-            <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
-            <Button component={Link} to={DASHBOARD}>Back</Button>
             </Box>
             <TextField
                 label="Old Password"

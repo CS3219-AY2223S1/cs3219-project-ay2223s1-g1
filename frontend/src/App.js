@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Routes, Route, Navigate} from "react-router-dom";
+import { Routes, Route, Navigate} from "react-router-dom";
 import SignupPage from './components/SignupPage';
 import SigninPage from './components/SigninPage';
 import ProfilePage from './components/ProfilePage';
@@ -10,6 +10,7 @@ import {useState, useEffect} from "react";
 import { UserContext } from "./util/userContext";
 import {SIGNUP, SIGNIN, DASHBOARD, DIFFICULTY, PROFILE, QUESTIONS} from "./configs";
 import QuestionsPage from "./components/questionsPage";
+import Navbar from "./components/Navbar";
 
 function App() {
 const [user, setUser] = useState(null)
@@ -32,27 +33,32 @@ useEffect(()=>{
 
     return (
         <div className="App">
-            <Box display={"flex"} flexDirection={"column"} padding={"4rem"}>
-                <Router>
-                    <UserContext.Provider value={{user, setUser}}>
-                        {user?
+            
+            <UserContext.Provider value={{user, setUser}}>
+            <Box display={"flex"} flexDirection={"column"} padding={user?"":"4rem"} margin={"10px"}>
+                    {user?(<>
+                   
+                        <Navbar />
                         <Routes>
-                        <Route exact path="/*" element={<Navigate replace to={DASHBOARD} />}></Route>
-                        <Route path={DASHBOARD} element={<SelectDifficultyPage/>}/>
-                        <Route path={DIFFICULTY} element={<PendingMatchingPage/>}/>
-                        <Route path={PROFILE} element={<ProfilePage/>}/>
+                        <Route path="/*" element={<Navigate replace to={DASHBOARD} />}></Route>
+                        <Route exact path={DASHBOARD} element={<SelectDifficultyPage/>}/>
+                        <Route exact path={DIFFICULTY} element={<PendingMatchingPage/>}/>
+                        <Route exact path={PROFILE} element={<ProfilePage/>}/>
                         <Route path={QUESTIONS} element={<QuestionsPage/>}/>
                         <Route path="/room/*" element={<Room/>}/>
-                        </Routes>:
+                        </Routes></>)
+                    :
+                        (
                         <Routes>
                         <Route exact path="/*" element={<Navigate replace to={SIGNIN} />}></Route>
                         <Route path={SIGNUP} element={<SignupPage/>}/>
                         <Route path={SIGNIN} element={<SigninPage/>}/>
-                        </Routes>
+                        </Routes>)
+                   
                         }
-                    </UserContext.Provider>
-                </Router>
-            </Box>
+                        </Box>
+                </UserContext.Provider>
+            
         </div>
     );
 }

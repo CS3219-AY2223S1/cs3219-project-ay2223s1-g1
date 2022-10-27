@@ -6,12 +6,11 @@ import {
     DialogContentText,
     DialogTitle,
 } from "@mui/material";
-import {BrowserRouter as Navigate} from "react-router-dom";
 import {useState, useContext} from "react";
 import axios from "axios";
 import {SIGNUP, SIGNIN, DASHBOARD,  URL_USER_SVC} from "../configs";
 import { STATUS_CODE_BAD_REQUEST ,STATUS_CODE_SUCCESS} from "../constants";
-import {Link} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 import { UserContext } from "../util/userContext";
 import { Form, Input, Button } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
@@ -25,7 +24,7 @@ function SigninPage() {
     const [isSigninSuccess, setIsSigninSuccess] = useState(false)
     // eslint-disable-next-line
     const {user,setUser} = useContext(UserContext)
-
+    const navigate = useNavigate();
     const handleSignin = async (e) => {
         let username = e.username
         let password = e.password
@@ -44,7 +43,7 @@ function SigninPage() {
             today.setHours(today.getHours() + 1);
             localStorage.setItem('user', JSON.stringify({username:username, accesstoken:accesstoken,expiration:today}));
             setUser({username:username, accesstoken:accesstoken})
-            return <Navigate to={DASHBOARD} />
+            navigate(DASHBOARD);
         }
     }
 
@@ -125,7 +124,7 @@ function SigninPage() {
                 </DialogContent>
                 <DialogActions>
                     {isSigninSuccess
-                        ? <Button component={Link} to={DASHBOARD}>Done</Button>
+                        ?<></>
                         : <Button onClick={closeDialog}>Done</Button>
                     }
                 </DialogActions>
