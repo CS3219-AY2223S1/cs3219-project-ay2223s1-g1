@@ -62,12 +62,10 @@ function ProfilePage() {
             setUser(null)
         }
     }
+    
 
     return (
-        <Box display={"flex"} flexDirection={"column"} width={"70%"}>
-            <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
-                <Button variant={"outlined"} onClick={handleDelete}>Delete Account</Button>
-            </Box>
+        <Box display={"flex"} flexDirection={"column"} width={"45%"} alignSelf={"center"}>
             <TextField
                 label="Old Password"
                 variant="standard"
@@ -97,6 +95,9 @@ function ProfilePage() {
             />
             <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
                 <Button variant={"outlined"} onClick={handleUpdate}>Submit</Button>
+            </Box>
+            <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
+                <Button variant={"outlined"} onClick={handleDelete}>Delete Account</Button>
             </Box>
             <Dialog
                 open={isDialogOpen}

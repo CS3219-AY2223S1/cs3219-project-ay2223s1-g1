@@ -3,7 +3,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: rgb(96, 132, 152);
+    background: #50aaff;
     border-bottom: 1px solid #dbd6d6;
     padding-bottom: 1px;
     border-radius:10px
@@ -60,7 +60,7 @@
       top: 60px;
       display: flex;
       flex-direction: column;
-      background: rgb(107, 151, 175);
+      background: #4d80af;
       z-index: 1;
       left: 0;
       width: 100%;
