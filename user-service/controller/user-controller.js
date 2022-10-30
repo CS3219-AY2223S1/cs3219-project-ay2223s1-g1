@@ -35,6 +35,9 @@ export async function createUser(req, res) {
 export async function signIn(req, res) {
     try {
         const { username, password } = req.body;
+        if (!username && !password) {
+            return res.status(400).json({message: 'Incorrect username/password!'});
+        }
         const user = await _FindOneuser(username,password)
         if (user) {
             // refresh token in cookie, access token in data
