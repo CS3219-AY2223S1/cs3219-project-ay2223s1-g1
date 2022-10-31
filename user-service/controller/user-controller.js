@@ -11,13 +11,13 @@ import { ACCESS_TOKEN_SECRET , REFRESH_ACCESS_TOKEN_SECRET} from '../constants/c
 
 export async function createUser(req, res) {
     try {
-        const { username, password } = req.body;
+        const { username, password , checked} = req.body;
         const duplicate = await _FindUserbyUsername(username)
         if (duplicate.length > 0) {
             console.log(`Duplicate username requested in user creation - ${username}`)
             return res.status(409).json({message: 'Duplicate username!'});}
         if (username && password) {
-            const resp = await _createUser(username, password);
+            const resp = await _createUser(username, password , checked);
             if (resp.err) {
                 return res.status(400).json({message: 'Could not create a new user!'});
             } else {
@@ -48,7 +48,7 @@ export async function signIn(req, res) {
             if(validatePassword(password, user.password)){
                 res.cookie("refreshtoken", refreshToken, {httpOnly:true})
                 console.log(`User ${username} logged in successfully!`)
-                return res.status(200).json({message: `Log in is successful!`,accesstoken:accessToken });
+                return res.status(200).json({message: `Log in is successful!`,accesstoken:accessToken , admin:user.admin});
             }  else {
                 return res.status(400).json({message: 'Username and/or Password are missing!'});
             }

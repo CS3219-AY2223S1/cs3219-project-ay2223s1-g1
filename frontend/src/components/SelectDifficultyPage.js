@@ -1,49 +1,26 @@
-import { Box, Button, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
-import { useContext } from "react";
-import { URL_USER_SVC, LOGOUT, PROFILE, DIFFICULTY, QUESTIONS } from "../configs";
-import { STATUS_CODE_CONFLICT, STATUS_CODE_SUCCESS } from "../constants";
-import { UserContext } from "../util/userContext";
-import useAxios from "../util/useAxios";
+
+import 'antd/dist/antd.min.css';
+import {
+    Box,
+    Typography,
+
+    
+} from "@mui/material";
+
 
 function SelectDifficultyPage() {
-    // eslint-disable-next-line
-    const {user, setUser} = useContext(UserContext)
-    const axios = useAxios()
-    const handleLogout = async () => {
-        const res = await axios.post(URL_USER_SVC + LOGOUT, {withCredentials:true, credentials: "include"})
-            .catch((err) => {
-                if (err.response.status === STATUS_CODE_CONFLICT) {
-                    console.log("Error during log out")
-                }
-            })
-        if (res && res.status === STATUS_CODE_SUCCESS) {
-            localStorage.setItem("user",null)
-            setUser(null)
-        }
-    }
 
-    return (
-        <Box display={"flex"} flexDirection={"column"} width={"70%"}>
-            <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
-                <Button variant={"outlined"} onClick={handleLogout}>Logout</Button>
-            </Box>
-            <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
-                <Button component={Link} to={PROFILE}>Profile</Button>
-            </Box>
 
-            
 
-            <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-start"}>
-                <Typography variant={"h5"} marginBottom={"10px"}>Select Difficulty Level : </Typography>
-                <Button component={Link} to={DIFFICULTY} state={{diff: 'Easy', name: user}}>Easy</Button>
-                <Button component={Link} to={DIFFICULTY} state={{diff: 'Medium', name: user}}>Medium</Button>
-                <Button component={Link} to={DIFFICULTY} state={{diff: 'Hard', name: user}}>Hard</Button>
-            </Box>
-            <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-start"}>
-                <Typography variant={"h5"} marginBottom={"10px"}>For question service:</Typography>
-                <Button component={Link} to={QUESTIONS}>View all available questions</Button>
-            </Box>
+
+    return (  
+        <Box display={"flex"} flexDirection={"column"} width={"70%"} alignSelf={'center'} margin={'50px'}>
+            <Typography variant={"h5"} marginBottom={"10px"}>Welcome to Group 1's Peer prep</Typography>
+            <Typography variant={"h5"} marginBottom={"10px"}>To Test out matching service, click on Match Tab and select a difficulty</Typography>
+            <Typography variant={"h5"} marginBottom={"10px"}>To Test out reset of password, click on Profile Tab and Account Settings</Typography>
+            <Typography variant={"h5"} marginBottom={"10px"}>Take note, the Question modification is only allowed for Admins</Typography>
+            <Typography variant={"h5"} marginBottom={"10px"}>To Add / Edit / Remove Questions in the question bank, click on the Questions Tab</Typography>
+            <Typography variant={"h5"} marginBottom={"10px"}>To Log Out, Click on Profile Tab and Log Out</Typography>
         </Box>
     )
 }
