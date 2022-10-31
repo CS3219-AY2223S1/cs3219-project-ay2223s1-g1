@@ -11,7 +11,7 @@ import { ACCESS_TOKEN_SECRET , REFRESH_ACCESS_TOKEN_SECRET} from '../constants/c
 
 export async function createUser(req, res) {
     try {
-        const { username, password , checked} = req.body;
+        const { username, password , checked } = req.body;
         const duplicate = await _FindUserbyUsername(username)
         if (duplicate.length > 0) {
             console.log(`Duplicate username requested in user creation - ${username}`)
@@ -38,7 +38,7 @@ export async function signIn(req, res) {
         if (!username && !password) {
             return res.status(400).json({message: 'Incorrect username/password!'});
         }
-        const user = await _FindOneuser(username,password)
+        const user = await _FindOneuser(username, password)
         if (user) {
             // refresh token in cookie, access token in data
             const accessToken = jwt.sign({username:username},ACCESS_TOKEN_SECRET,{expiresIn:"1h"})

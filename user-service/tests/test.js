@@ -24,13 +24,14 @@ describe('user-controller tes', () => {
         it('create user', (done) => {
             chai.request(app)
             .post('/api/user/signup')
-            .send({username:'user1', password:'password1'})
+            .send({ username:'user1', password:'password1', admin: false })
             .end((err, res) => {
                 res.should.have.status(201);
                 done();
             })
         });
     });
+
     describe("sign up fail missing", () => {
         it('user info missing', (done) => {
             chai.request(app)
@@ -43,13 +44,19 @@ describe('user-controller tes', () => {
         });
     });
     describe("sign up fail duplicate", () => {
-        UserModel.create({ username: 'user1', password: 'test' })
         it('duplicate user', (done) => {
             chai.request(app)
             .post('/api/user/signup')
-            .send({username:'user1', password:'password1'})
-            .end((err, res) => {
-                res.should.have.status(409);
+            .send({ username:'user1', password:'test', admin: false})
+            .then((res) => {
+                res.should.have.status(201);
+                return chai.request(app)
+                .post('/api/user/signup')
+                .send({ username:'user1', password:'test', admin: false })
+                .then((res) => {
+                    res.should.have.status(409);
+                })
+            }).end((err, res) => {
                 done();
             })
         });
@@ -59,13 +66,14 @@ describe('user-controller tes', () => {
         it('sign in wrong password', (done) => {
             chai.request(app)
             .post('/api/user/signin')
-            .send({username:'user1', password:'password2'})
+            .send({username: 'user1', password: 'password2'})
             .end((err, res) => {
                 res.should.have.status(400);
                 done();
             })
         });
     });
+
     describe("sign in fail missing", () => {
         it('user info missing', (done) => {
             chai.request(app)
@@ -77,14 +85,21 @@ describe('user-controller tes', () => {
             })
         });
     });
+
     describe("sign in success", () => {
-        UserModel.create({ username: 'user1', password: 'test' })
         it('sign in existing user', (done) => {
             chai.request(app)
-            .post('/api/user/signin')
-            .send({username:'user1', password:'password1'})
-            .end((err, res) => {
-                res.should.have.status(200);
+            .post('/api/user/signup')
+            .send({ username: 'user1', password: 'test', admin: false })
+            .then((res) => {
+                res.should.have.status(201);
+                return chai.request(app)
+                .post('/api/user/signin')
+                .send({ username: 'user1', password: 'test' })
+                .then((res) => {
+                    res.should.have.status(200);
+                })
+            }).end((err, res) => {
                 done();
             })
         });
