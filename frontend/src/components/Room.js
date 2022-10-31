@@ -253,6 +253,13 @@ function Room() {
         </div>
         <div style={{width:'100%'}}>
         <TextField
+                    onKeyDown={(ev) => {
+                      if (ev.key === 'Enter') {
+                        // Do code here
+                        sendMessage()
+                        ev.preventDefault();
+                      }
+                    }}
                     label="Message"
                     variant="outlined"
                     value={string}

@@ -31,6 +31,8 @@ export async function ormAddBlacklist(token) {
             const newBlacklist = await createBlackList({token:token, createdAt: Date.now()});
             newBlacklist.save();
             return true;
+        } else {
+            return false;
         }
     } catch (err) {
         console.log('ERROR: Could not add to blacklist!');
