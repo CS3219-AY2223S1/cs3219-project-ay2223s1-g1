@@ -10,7 +10,7 @@ import {useState} from "react";
 import axios from "axios";
 import {SIGNUP, SIGNIN, URL_USER_SVC} from "../configs";
 import {STATUS_CODE_CONFLICT, STATUS_CODE_CREATED} from "../constants";
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, Checkbox  } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import {Link} from "react-router-dom";
 import 'antd/dist/antd.min.css';
@@ -21,12 +21,17 @@ function SignupPage() {
     const [dialogTitle, setDialogTitle] = useState("")
     const [dialogMsg, setDialogMsg] = useState("")
     const [isSignupSuccess, setIsSignupSuccess] = useState(false)
+    const [checked, setChecked] = useState(false)
+
+const onChange = (checkedValues) => {
+  setChecked(!checked)
+};
 
     const handleSignup = async (e) => {
         let username = e.username
         let password = e.password
         setIsSignupSuccess(false)
-        const res = await axios.post(URL_USER_SVC+SIGNUP, { username, password })
+        const res = await axios.post(URL_USER_SVC+SIGNUP, { username, password ,checked })
             .catch((err) => {
                 if (err.response.status === STATUS_CODE_CONFLICT) {
                     setErrorDialog('This username already exists')
@@ -122,6 +127,11 @@ function SignupPage() {
           type="password"
           placeholder="Confirm Password"
         />
+      </Form.Item>
+      <Form.Item
+        style={{alignSelf:'center'}}
+      >
+        <Checkbox onChange={onChange} defaultChecked={checked}>Register As Admin</Checkbox>
       </Form.Item>
       <Form.Item>
         <Button type="primary" htmlType="submit" className="login-form-button">

@@ -28,12 +28,12 @@ const Navbar = () => {
 }
   const profilemenu = (
     <Menu selectable={false}>
-      <Menu.Item>
+      <Menu.Item key={'Intro'}>
         <strong>Hello, {user.username}</strong>
 
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item>
+      <Menu.Item key={'Settings'}>
         <Link to={PROFILE} onClick={() => setIsOpen(!isOpen)}>
           <span>
             <i className="fe fe-user mr-2" />
@@ -43,7 +43,7 @@ const Navbar = () => {
       </Menu.Item>
       <Menu.Divider />
 
-      <Menu.Item onClick={handleLogout} >
+      <Menu.Item onClick={handleLogout} key={'Logout'} >
         <span>
           <i className="fe fe-log-out mr-2" />
           Logout
@@ -53,7 +53,7 @@ const Navbar = () => {
   )
   const matchmenu = (
     <Menu selectable={false}>
-      <Menu.Item>
+      <Menu.Item key={'Easy'}>
         <Link to={DIFFICULTY} state={{diff: 'Easy', name: user}} onClick={() => setIsOpen(!isOpen)}>
           <span>
             <i className="fe fe-user mr-2" />
@@ -62,7 +62,7 @@ const Navbar = () => {
         </Link>
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item>
+      <Menu.Item key={'Medium'}>
         <Link to={DIFFICULTY} state={{diff: 'Medium', name: user}} onClick={() => setIsOpen(!isOpen)}>
           <span>
             <i className="fe fe-user mr-2" />
@@ -71,7 +71,7 @@ const Navbar = () => {
         </Link>
       </Menu.Item>
       <Menu.Divider />
-      <Menu.Item>
+      <Menu.Item key={'Hard'}>
         <Link to={DIFFICULTY} state={{diff: 'Hard', name: user}} onClick={() => setIsOpen(!isOpen)}>
           <span>
             <i className="fe fe-user mr-2" />
@@ -86,7 +86,7 @@ const Navbar = () => {
       <span className="nav-logo">Group 1</span>
       <div className={`nav-items ${isOpen && "open"}`}>
         <Link to={DASHBOARD} onClick={() => setIsOpen(!isOpen)}>Home</Link>
-        <Link to={QUESTIONS} onClick={() => setIsOpen(!isOpen)}>Questions</Link>
+        {user.admin?<Link to={QUESTIONS} onClick={() => setIsOpen(!isOpen)}>Questions</Link>:<></>}
         <Dropdown overlay={matchmenu}>
           
           <div className="dropdown">

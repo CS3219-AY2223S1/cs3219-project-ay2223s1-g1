@@ -108,10 +108,7 @@ function QuestionsPage() {
     },[])
 
     return (
-        <Box display={"flex"} flexDirection={"column"} width={"70%"}>
-            <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
-            <Button component={Link} to={DASHBOARD}>Back</Button>
-            </Box>
+        <Box display={"flex"} flexDirection={"column"} width={"70%"} alignSelf={'center'}>
             <Typography variant={"h5"} marginBottom={"10px"}>Add a new question: (For admins only) </Typography>
             <TextField
                 label="Question Title"
