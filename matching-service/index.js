@@ -61,13 +61,12 @@ io.on("connection", (socket) => {
         const match_user_id = sessionHash[match_user]
         socket.to(match_user_id).emit('update_lang_choice', new_choice);
     });
-
-    socket.on('update_match', (match_user, new_text) => {
-        const match_user_id = sessionHash[match_user]
-        socket.to(match_user_id).emit('update_text', new_text);
-    });
     socket.on('update_question', (match_user, questionData) => {
         const match_user_id = sessionHash[match_user]
         socket.to(match_user_id).emit('update_question', questionData);
+    });
+    socket.on('update_code', (match_user, codeData) => {
+        const match_user_id = sessionHash[match_user]
+        socket.to(match_user_id).emit('update_code', codeData);
     });
 });
