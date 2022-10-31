@@ -7,15 +7,11 @@ import {
     DialogContent,
     DialogContentText,
     TextField,
-    Switch,
-    Grid
-    
 } from "@mui/material";
 import { languageOptions } from "./Editor/constants/languageOptions";
 import LanguagesDropdown from "./Editor/LanguagesDropdown";
 import ThemeDropdown from "./Editor/ThemeDropdown";
 import { useLocation, Navigate, Link } from "react-router-dom";
-import { classnames } from "./Editor/utils/general";
 import { io } from "socket.io-client";
 
 import { defineTheme } from "./Editor/lib/defineTheme";
@@ -64,7 +60,6 @@ function Room() {
     const [string, setString] = useState("")
     const [messages, setMessage] = useState([])
     const [checked, setChecked] = useState(false);
-    const [text, setText] = useState("")
     const [question,setQuestion]= useState("")
     const [langChoice, setLangChoice] = useState(languageOptions[0])
     const [code, setCode] = useState(javascriptDefault);
@@ -199,6 +194,7 @@ function Room() {
             <div
             style={{
                 position: 'fixed',
+                zIndex:1,
         bottom: '90px',
         right: '24px',
         // Size
@@ -297,7 +293,7 @@ function Room() {
                 <ThemeDropdown handleThemeChange={handleThemeChange} theme={theme} />
                 </div>
             </div>
-            <div className="flex flex-row space-x-4 items-start px-4 py-4" style={{zIndex:'-1'}}>
+            <div className="flex flex-row space-x-4 items-start px-4 py-4">
                 <div className="flex flex-col w-full h-full justify-start items-end">
                 <div className="overlay rounded-md overflow-hidden w-full h-full shadow-4xl">
                   <Editor

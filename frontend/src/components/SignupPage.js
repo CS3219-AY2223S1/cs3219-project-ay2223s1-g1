@@ -12,7 +12,6 @@ import {SIGNUP, SIGNIN, URL_USER_SVC} from "../configs";
 import {STATUS_CODE_CONFLICT, STATUS_CODE_CREATED} from "../constants";
 import { Form, Input, Button, Checkbox  } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
-import {Link} from "react-router-dom";
 import 'antd/dist/antd.min.css';
 import './SigninPage.css';
 

@@ -10,9 +10,8 @@ import {
 } from "@mui/material";
 
 import {useState, useContext} from "react";
-import {Link} from "react-router-dom";
-import { URL_USER_SVC, LOGOUT, DASHBOARD} from "../configs";
-import {STATUS_CODE_CONFLICT, STATUS_CODE_SUCCESS, STATUS_CODE_BAD_REQUEST} from "../constants";
+import { URL_USER_SVC} from "../configs";
+import { STATUS_CODE_SUCCESS, STATUS_CODE_BAD_REQUEST} from "../constants";
 import useAxios from "../util/useAxios";
 import { UserContext } from "../util/userContext";
 
