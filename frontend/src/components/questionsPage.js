@@ -11,8 +11,7 @@ import {
 } from "@mui/material";
 
 import {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
-import { DASHBOARD, URL_QUESTION_SVC} from "../configs";
+import { URL_QUESTION_SVC} from "../configs";
 import { STATUS_CODE_BAD_REQUEST, STATUS_CODE_CREATED, STATUS_CODE_SUCCESS} from "../constants";
 import useAxios from "../util/useAxios";
 import Table from '@mui/material/Table';
@@ -105,13 +104,11 @@ function QuestionsPage() {
     }
     useEffect(()=>{
         getAllQuestions()
+        // eslint-disable-next-line
     },[])
 
     return (
-        <Box display={"flex"} flexDirection={"column"} width={"70%"}>
-            <Box display={"flex"} flexDirection={"row"} justifyContent={"flex-end"}>
-            <Button component={Link} to={DASHBOARD}>Back</Button>
-            </Box>
+        <Box display={"flex"} flexDirection={"column"} width={"70%"} alignSelf={'center'}>
             <Typography variant={"h5"} marginBottom={"10px"}>Add a new question: (For admins only) </Typography>
             <TextField
                 label="Question Title"

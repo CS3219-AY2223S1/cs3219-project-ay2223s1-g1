@@ -13,7 +13,7 @@ import { io } from "socket.io-client";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { UserContext } from "../util/userContext";
-
+import "./PendingMatchingPage.css";
 
 function PendingMatchPage() {
     const location = useLocation()
@@ -24,6 +24,12 @@ function PendingMatchPage() {
     const [foundMatch, setFoundMatch] = useState(false)
     const [matchName, setMatchName] = useState("")
     const [noMatchFound, setNoMatchFound] = useState(false);
+
+const Loading =()=>
+  <div className="loading">
+    <div></div>
+    <div></div>
+  </div>  
 
     useEffect(() => {
         const socket = io(URL_MATCHING_SVC);
@@ -53,10 +59,10 @@ function PendingMatchPage() {
     }, []);
 
     return (
-        <Box display={"flex"} flexDirection={"column"} width={"70%"}>
-            <Typography variant={"h3"} marginBottom={"2rem"}>Will match you to a user here!</Typography>
-            <Typography variant={"h5"} marginBottom={"2rem"}>Chosen Difficulty: {diff}</Typography>
-            {foundMatch ? <Navigate to={roomId} state={{name: user.username, matchName: matchName, diff:diff}}/>:null}
+        <Box display={"flex"} flexDirection={"column"} width={"70%"} alignSelf={"center"}>
+            {foundMatch ? <Navigate to={roomId} state={{name: user.username, matchName: matchName, diff:diff}}/>:<Loading/>}
+            <Typography variant={"h5"} marginBottom={"2rem"} alignSelf={"center"} >Searching for Users</Typography>
+            <Typography variant={"h5"} marginBottom={"2rem"} alignSelf={"center"}>Chosen Difficulty: {diff}</Typography>
             <Dialog open={noMatchFound}>
                 <DialogContent>
                     <DialogContentText>Sorry, we could not find a match for you!</DialogContentText>
