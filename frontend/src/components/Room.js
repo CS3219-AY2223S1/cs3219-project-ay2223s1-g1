@@ -294,7 +294,7 @@ function Room() {
                 <div className="flex flex-col w-full h-full justify-start items-end">
                 <CodeEditorWindow
                     code={code}
-                    onChange={onChangeText}
+                    onChange={onChange}
                     language={langChoice?.value}
                     theme={theme.value}
                 />
