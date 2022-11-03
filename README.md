@@ -9,6 +9,14 @@ This is a template repository for CS3219 project.
 4. Install npm packages using `npm i`.
 5. Run User Service using `npm run dev`.
 
+## Matching Service
+1. Install npm packages using `npm i`.
+2. Run Matching Service using `npm run dev`.
+
+## Question Service
+1. Install npm packages using `npm i`.
+2. Run Matching Service using `npm run dev`.
+
 ## Frontend
 1. Install npm packages using `npm i`.
 2. Run Frontend using `npm start`.
