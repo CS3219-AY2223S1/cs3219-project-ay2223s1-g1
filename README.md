@@ -1,4 +1,4 @@
-# CS3219 Team One Project
+# CS3219 Team 1 Project
 
 This application aims to help those preparing for their technical interview by allowing them to practice different questions based on the difficulty that they have chosen. The collaboration service and chat service facilitates this process as they would be able to discuss a particular question therefore improving their technical communication skills.
 
@@ -48,3 +48,6 @@ Then, start each of the following services individually in the following way.
 1. Navigate into the `frontend` directory.
 2. Install npm packages using `npm i`.
 3. Run Frontend using `npm start`.
+
+
+#### Developers - Han Bin Lee, Noorul Azlina, Sagar Sureka, Thomas Mertens
