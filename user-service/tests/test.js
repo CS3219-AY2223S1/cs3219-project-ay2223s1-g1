@@ -50,13 +50,12 @@ describe('user-controller tes', () => {
             .send({ username:'user1', password:'test', admin: false})
             .then((res) => {
                 res.should.have.status(201);
-                return chai.request(app)
+                chai.request(app)
                 .post('/api/user/signup')
                 .send({ username:'user1', password:'test', admin: false })
                 .then((res) => {
                     res.should.have.status(409);
                 })
-            }).end((err, res) => {
                 done();
             })
         });
@@ -93,13 +92,12 @@ describe('user-controller tes', () => {
             .send({ username: 'user1', password: 'test', admin: false })
             .then((res) => {
                 res.should.have.status(201);
-                return chai.request(app)
+                chai.request(app)
                 .post('/api/user/signin')
                 .send({ username: 'user1', password: 'test' })
                 .then((res) => {
                     res.should.have.status(200);
                 })
-            }).end((err, res) => {
                 done();
             })
         });
