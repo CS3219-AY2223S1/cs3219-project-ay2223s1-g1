@@ -1,0 +1,24 @@
+name: Matching service
+
+on:
+  push:
+    branches: 
+      - '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./matching-service
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build matching service
+      run: |
+        npm install
+        npm ci
+        unset CI
+        npm run build -if-present

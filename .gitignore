@@ -1,0 +1,10 @@
+
+# Dependencies
+node_modules/
+
+# Environment Files
+.env
+.vscode
+
+# Dependency directories
+node_modules

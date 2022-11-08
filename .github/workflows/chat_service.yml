@@ -1,0 +1,24 @@
+name: Chat service
+
+on:
+  push:
+    branches: 
+      - '**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: ./chat-service
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build chat service
+      run: |
+        npm install
+        npm ci
+        unset CI
+        npm run build -if-present
